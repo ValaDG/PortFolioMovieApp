@@ -9,17 +9,21 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.List;
+import java.util.ArrayList;
 
 
 public class MoviePosterAdapter extends ArrayAdapter<MovieObject> {
 
+   private Context mContext;
 
-    public MoviePosterAdapter(Context context, List<MovieObject> objects) {
+    public MoviePosterAdapter(Context context, ArrayList<MovieObject> objects) {
         super(context, R.layout.gridview_item, objects);
 
+mContext =context;
 
     }
+
+
 
 
     @Override
@@ -38,7 +42,8 @@ public class MoviePosterAdapter extends ArrayAdapter<MovieObject> {
         int width = getContext().getResources().getDisplayMetrics().widthPixels / 2;
 
         ImageView Poster = (ImageView) convertView.findViewById(R.id.gridview_item_image);
-        Picasso.with(getContext())
+
+        Picasso.with(mContext)
                 .load(baseUrl + object.PosterUrl)
                 .resize(width, width)
                 .centerCrop()

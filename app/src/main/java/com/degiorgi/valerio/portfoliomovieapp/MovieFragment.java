@@ -26,6 +26,19 @@ import java.util.ArrayList;
 public class MovieFragment extends android.support.v4.app.Fragment {
 
     MoviePosterAdapter mAdapater;
+    ArrayList<MovieObject> Movies;
+
+    private void UpdateMovies()
+    {
+        FetchMovieTask task = new FetchMovieTask();
+        task.execute();    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        UpdateMovies();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,8 +46,8 @@ public class MovieFragment extends android.support.v4.app.Fragment {
 
         View rootView = inflater.inflate(R.layout.movie_fragment_layout, container, false);
 
-        FetchMovieTask task = new FetchMovieTask();
-        task.execute();
+        mAdapater = new MoviePosterAdapter(getContext(), new ArrayList<MovieObject>());
+
 
         GridView gridview = (GridView) rootView.findViewById(R.id.gridview_list);
 
@@ -47,7 +60,7 @@ public class MovieFragment extends android.support.v4.app.Fragment {
 
     public ArrayList<MovieObject> TurnJsonIntoMovies(String MovieJsonString) throws JSONException {
 
-        ArrayList<MovieObject> MoviesList = new ArrayList<>();
+        ArrayList<MovieObject> MoviesList = new ArrayList<MovieObject>();
 
 
         JSONObject obj = new JSONObject(MovieJsonString);
@@ -78,7 +91,7 @@ public class MovieFragment extends android.support.v4.app.Fragment {
             String MovieJsonString = null;
 
             try {
-                URL url = new URL("http://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=MyOwnApiKey");
+                URL url = new URL("http://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=241141bc665e9b2d0fb9ac4759497786");
 
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
@@ -126,13 +139,18 @@ public class MovieFragment extends android.support.v4.app.Fragment {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+if(s!= null) {
+    mAdapater.clear();
+    try {
+        Movies = TurnJsonIntoMovies(s);
+    } catch (JSONException e) {
+        e.printStackTrace();
+    }
+    for (MovieObject movie : Movies) {
+        mAdapater.add(movie);
 
-            try {
-                mAdapater = new MoviePosterAdapter(getContext(), TurnJsonIntoMovies(s));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
+    }
+}
 
         }
 }
