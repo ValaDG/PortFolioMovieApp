@@ -68,13 +68,14 @@ public class MovieFragment extends android.support.v4.app.Fragment {
 
         JSONArray x = obj.getJSONArray("results");
 
+for(int i = 0; i<x.length(); i++) {
+    String url = x.getJSONObject(i).getString("poster_path");
+    int id = x.getJSONObject(i).getInt("id");
 
-        String url = x.getJSONObject(0).getString("poster_path");
-        int id = x.getJSONObject(0).getInt("id");
+    MovieObject movie = new MovieObject(url, id);
 
-        MovieObject movie = new MovieObject(url, id);
-
-        MoviesList.add(movie);
+    MoviesList.add(movie);
+}
 
         return MoviesList;
     }
