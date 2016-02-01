@@ -1,11 +1,14 @@
 package com.degiorgi.valerio.portfoliomovieapp;
 
+import android.app.Fragment;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import org.json.JSONArray;
@@ -23,7 +26,7 @@ import java.util.ArrayList;
 /**
  * Created by Valerio on 23/01/2016.
  */
-public class MovieFragment extends android.support.v4.app.Fragment {
+public class MovieFragment extends Fragment {
 
     MoviePosterAdapter mAdapater;
     ArrayList<MovieObject> Movies;
@@ -46,12 +49,36 @@ public class MovieFragment extends android.support.v4.app.Fragment {
 
         View rootView = inflater.inflate(R.layout.movie_fragment_layout, container, false);
 
-        mAdapater = new MoviePosterAdapter(getContext(), new ArrayList<MovieObject>());
+        mAdapater = new MoviePosterAdapter(getActivity(), new ArrayList<MovieObject>());
 
 
         GridView gridview = (GridView) rootView.findViewById(R.id.gridview_list);
 
         gridview.setAdapter(mAdapater);
+
+        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
+            MovieObject movie = mAdapater.getItem(position);
+
+            String url = movie.PosterUrl;
+            String title = movie.originalTitle;
+            String releaseDate = movie.release;
+            double rating = movie.userRating;
+            String synopsis = movie.overview;
+            String RatingString = String.valueOf(rating);
+
+            Intent intent = new Intent(getActivity(), MovieDetailActivity.class)
+                    .putExtra("url", url)
+                    .putExtra("title", title)
+                    .putExtra("release", releaseDate)
+                    .putExtra("synopsis", synopsis)
+                    .putExtra("rating", RatingString);
+            startActivity(intent);
+        }
+    });
 
 
         return rootView;
@@ -71,8 +98,12 @@ public class MovieFragment extends android.support.v4.app.Fragment {
 for(int i = 0; i<x.length(); i++) {
     String url = x.getJSONObject(i).getString("poster_path");
     int id = x.getJSONObject(i).getInt("id");
+    String title = x.getJSONObject(i).getString("original_title");
+    String synopsis = x.getJSONObject(i).getString("overview");
+    String releaseDate = x.getJSONObject(i).getString("release_date");
+    double rating = x.getJSONObject(i).getDouble("vote_average");
 
-    MovieObject movie = new MovieObject(url, id);
+    MovieObject movie = new MovieObject(url, title,synopsis,releaseDate,rating,id);
 
     MoviesList.add(movie);
 }
@@ -92,7 +123,7 @@ for(int i = 0; i<x.length(); i++) {
             String MovieJsonString = null;
 
             try {
-                URL url = new URL("http://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=APIKEY");
+                URL url = new URL("http://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=241141bc665e9b2d0fb9ac4759497786");
 
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");

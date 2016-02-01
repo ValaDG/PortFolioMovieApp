@@ -40,12 +40,14 @@ mContext =context;
         }
         //Get screen size, and divide it by the number of columns of your grid view.
         int width = getContext().getResources().getDisplayMetrics().widthPixels / 2;
+        int height = (int) ((int) width*1.5);
+
 
         ImageView Poster = (ImageView) convertView.findViewById(R.id.gridview_item_image);
 
         Picasso.with(mContext)
                 .load(baseUrl + object.PosterUrl)
-                .resize(width, width)
+                .resize(width, height)
                 .centerCrop()
                 .into(Poster);
 
