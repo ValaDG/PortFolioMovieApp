@@ -25,6 +25,8 @@ public class MovieDetailActivity extends AppCompatActivity {
 
     {
 
+        //Single detail activity for single movies, we receive the intents from the movie fragment and update each view with the correct values
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 

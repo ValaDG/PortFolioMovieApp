@@ -33,10 +33,10 @@ public class MovieFragment extends Fragment {
     MoviePosterAdapter mAdapater;
     ArrayList<MovieObject> Movies;
 
-    private void UpdateMovies()
-    { //Executes the background Network Call
+    private void UpdateMovies() { //Executes the background Network Call
         FetchMovieTask task = new FetchMovieTask();
-        task.execute();    }
+        task.execute();
+    }
 
     @Override
     public void onStart() {
@@ -61,27 +61,27 @@ public class MovieFragment extends Fragment {
         // sets up an on click Listener on the gridview, gathers and sends the clicked movie information to the new activity
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-        @Override
-        public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
-            MovieObject movie = mAdapater.getItem(position);
+                MovieObject movie = mAdapater.getItem(position);
 
-            String url = movie.PosterUrl;
-            String title = movie.originalTitle;
-            String releaseDate = movie.release;
-            double rating = movie.userRating;
-            String synopsis = movie.overview;
-            String RatingString = String.valueOf(rating);
+                String url = movie.PosterUrl;
+                String title = movie.originalTitle;
+                String releaseDate = movie.release;
+                double rating = movie.userRating;
+                String synopsis = movie.overview;
+                String RatingString = String.valueOf(rating);
 
-            Intent intent = new Intent(getActivity(), MovieDetailActivity.class)
-                    .putExtra("url", url)
-                    .putExtra("title", title)
-                    .putExtra("release", releaseDate)
-                    .putExtra("synopsis", synopsis)
-                    .putExtra("rating", RatingString);
-            startActivity(intent);
-        }
-    });
+                Intent intent = new Intent(getActivity(), MovieDetailActivity.class)
+                        .putExtra("url", url)
+                        .putExtra("title", title)
+                        .putExtra("release", releaseDate)
+                        .putExtra("synopsis", synopsis)
+                        .putExtra("rating", RatingString);
+                startActivity(intent);
+            }
+        });
 
 
         return rootView;
@@ -99,18 +99,18 @@ public class MovieFragment extends Fragment {
 
         JSONArray x = obj.getJSONArray("results");
 
-for(int i = 0; i<x.length(); i++) {
-    String url = x.getJSONObject(i).getString("poster_path");
-    int id = x.getJSONObject(i).getInt("id");
-    String title = x.getJSONObject(i).getString("original_title");
-    String synopsis = x.getJSONObject(i).getString("overview");
-    String releaseDate = x.getJSONObject(i).getString("release_date");
-    double rating = x.getJSONObject(i).getDouble("vote_average");
+        for (int i = 0; i < x.length(); i++) {
+            String url = x.getJSONObject(i).getString("poster_path");
+            int id = x.getJSONObject(i).getInt("id");
+            String title = x.getJSONObject(i).getString("original_title");
+            String synopsis = x.getJSONObject(i).getString("overview");
+            String releaseDate = x.getJSONObject(i).getString("release_date");
+            double rating = x.getJSONObject(i).getDouble("vote_average");
 
-    MovieObject movie = new MovieObject(url, title,synopsis,releaseDate,rating,id);
+            MovieObject movie = new MovieObject(url, title, synopsis, releaseDate, rating, id);
 
-    MoviesList.add(movie);
-}
+            MoviesList.add(movie);
+        }
 
         return MoviesList;
     }
@@ -118,7 +118,7 @@ for(int i = 0; i<x.length(); i++) {
 
     public class FetchMovieTask extends AsyncTask<Void, Void, String> {
 
-// we begin the network API call, and we check wheter the user has changed the sort parameter.
+        // we begin the network API call, and we check wheter the user has changed the sort parameter.
         @Override
         protected String doInBackground(Void... params) {
 
@@ -127,14 +127,15 @@ for(int i = 0; i<x.length(); i++) {
             String MovieJsonString = null;
 
             String baseUrl = "http://api.themoviedb.org/3/discover/movie?sort_by=";
-            String APIKEY = "&api_key=241141bc665e9b2d0fb9ac4759497786";
-            String sortBySetting ="";
+            String APIKEY = "& XXXXX"; //Get a new API key From the The Movie Database website, it requires a subscription
+                                             // Paste the API KEY after the & character
+            String sortBySetting = "";
 
             SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-sortBySetting = sharedPrefs.getString(getString(R.string.sort_by_key),getString(R.string.sort_by_default));
+            sortBySetting = sharedPrefs.getString(getString(R.string.sort_by_key), getString(R.string.sort_by_default));
 
             try {
-                URL url = new URL(baseUrl+sortBySetting+APIKEY);
+                URL url = new URL(baseUrl + sortBySetting + APIKEY);
 
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
@@ -179,24 +180,26 @@ sortBySetting = sharedPrefs.getString(getString(R.string.sort_by_key),getString(
             return MovieJsonString;
         }
 
+        // when the API call terminates, we get the result json string, parse it, get an arraylist of movieObjects from it
+        //and update the adapater.
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-if(s!= null) {
-    mAdapater.clear();
-    try {
-        Movies = TurnJsonIntoMovies(s);
-    } catch (JSONException e) {
-        e.printStackTrace();
-    }
-    for (MovieObject movie : Movies) {
-        mAdapater.add(movie);
+            if (s != null) {
+                mAdapater.clear();
+                try {
+                    Movies = TurnJsonIntoMovies(s);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                for (MovieObject movie : Movies) {
+                    mAdapater.add(movie);
 
-    }
-}
+                }
+            }
 
         }
-}
+    }
 }
 
 

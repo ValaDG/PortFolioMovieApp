@@ -38,7 +38,7 @@ mContext =context;
             convertView = inflater.inflate(R.layout.gridview_item, null);
 
         }
-        //Get screen size, and divide it by the number of columns of your grid view.
+        //Get screen size, and divide it by the number of columns of the grid view.
         int width = getContext().getResources().getDisplayMetrics().widthPixels / 2;
         int height = (int) ((int) width*1.5);
 
