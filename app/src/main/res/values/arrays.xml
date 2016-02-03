@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="SortByEntries">
+
+<item>@string/sort_by_popularity_label</item>
+<item>@string/sort_by_highest_rated_label</item>
+    </string-array>
+
+    <string-array name="SortByValues">
+
+        <item>@string/sort_by_popularity_value</item>
+        <item>@string/sort_by_highest_rated_value</item>
+    </string-array>
+
+
+</resources>

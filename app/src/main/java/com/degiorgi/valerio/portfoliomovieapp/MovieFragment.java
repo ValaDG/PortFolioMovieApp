@@ -2,8 +2,10 @@ package com.degiorgi.valerio.portfoliomovieapp;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +34,7 @@ public class MovieFragment extends Fragment {
     ArrayList<MovieObject> Movies;
 
     private void UpdateMovies()
-    {
+    { //Executes the background Network Call
         FetchMovieTask task = new FetchMovieTask();
         task.execute();    }
 
@@ -46,7 +48,7 @@ public class MovieFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-
+// Create a gridview reference, initialize the adapater, and assign it to the gridview
         View rootView = inflater.inflate(R.layout.movie_fragment_layout, container, false);
 
         mAdapater = new MoviePosterAdapter(getActivity(), new ArrayList<MovieObject>());
@@ -56,6 +58,7 @@ public class MovieFragment extends Fragment {
 
         gridview.setAdapter(mAdapater);
 
+        // sets up an on click Listener on the gridview, gathers and sends the clicked movie information to the new activity
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
         @Override
@@ -85,11 +88,12 @@ public class MovieFragment extends Fragment {
     }
 
 
+    // receives a json String from the movie Databases, and returns an arraylist of movie Objects
     public ArrayList<MovieObject> TurnJsonIntoMovies(String MovieJsonString) throws JSONException {
 
         ArrayList<MovieObject> MoviesList = new ArrayList<MovieObject>();
 
-
+// we parse the JSON and gather all the info we need into a movie Object
         JSONObject obj = new JSONObject(MovieJsonString);
 
 
@@ -114,7 +118,7 @@ for(int i = 0; i<x.length(); i++) {
 
     public class FetchMovieTask extends AsyncTask<Void, Void, String> {
 
-
+// we begin the network API call, and we check wheter the user has changed the sort parameter.
         @Override
         protected String doInBackground(Void... params) {
 
@@ -122,8 +126,15 @@ for(int i = 0; i<x.length(); i++) {
             BufferedReader reader = null;
             String MovieJsonString = null;
 
+            String baseUrl = "http://api.themoviedb.org/3/discover/movie?sort_by=";
+            String APIKEY = "&api_key=241141bc665e9b2d0fb9ac4759497786";
+            String sortBySetting ="";
+
+            SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+sortBySetting = sharedPrefs.getString(getString(R.string.sort_by_key),getString(R.string.sort_by_default));
+
             try {
-                URL url = new URL("http://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=241141bc665e9b2d0fb9ac4759497786");
+                URL url = new URL(baseUrl+sortBySetting+APIKEY);
 
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
