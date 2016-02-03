@@ -127,8 +127,8 @@ public class MovieFragment extends Fragment {
             String MovieJsonString = null;
 
             String baseUrl = "http://api.themoviedb.org/3/discover/movie?sort_by=";
-            String APIKEY = "& XXXXX"; //Get a new API key From the The Movie Database website, it requires a subscription
-                                             // Paste the API KEY after the & character
+            String APIKEY = "&api_key=xxxx"; //Get a new API key From the The Movie Database website, it requires a subscription
+
             String sortBySetting = "";
 
             SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
