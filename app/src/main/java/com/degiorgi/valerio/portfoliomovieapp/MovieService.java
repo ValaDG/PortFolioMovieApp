@@ -10,12 +10,14 @@ import retrofit2.http.Query;
  * Created by Valerio on 26/02/2016.
  */
 
-public final class Service {
 
-public interface FetchMovieInterface {
+public class MovieService {
 
-    @GET("3/discover/movie")
-    Call<MovieApiRequest> MovieApiRequest(@Query("sort_by") String sort, @Query("api_key") String apikey);
+    public interface FetchMovieInterface {
+
+        @GET("3/discover/movie")
+        Call<MovieApiRequest> getMovies(@Query("sort_by")String sort , @Query("api_key") String key);
 
 
-}}
+    }
+}

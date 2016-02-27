@@ -7,16 +7,17 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
+import com.degiorgi.valerio.portfoliomovieapp.models.Result;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 
-public class MoviePosterAdapter extends ArrayAdapter<MovieObject> {
+public class MoviePosterAdapter extends ArrayAdapter<Result> {
 
    private Context mContext;
 
-    public MoviePosterAdapter(Context context, ArrayList<MovieObject> objects) {
+    public MoviePosterAdapter(Context context, ArrayList<Result> objects) {
         super(context, R.layout.gridview_item, objects);
 
 mContext =context;
@@ -29,12 +30,12 @@ mContext =context;
     @Override
     // create a new ImageView for each item referenced by the Adapter
     public View getView(int position, View convertView, ViewGroup parent) {
-        MovieObject object = getItem(position);
+        Result object = getItem(position);
         String baseUrl = "http://image.tmdb.org/t/p/w185/";
 
 
         if (convertView == null) {
-            LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater inflater = LayoutInflater.from(mContext);
             convertView = inflater.inflate(R.layout.gridview_item, null);
 
         }
@@ -46,7 +47,7 @@ mContext =context;
         ImageView Poster = (ImageView) convertView.findViewById(R.id.gridview_item_image);
 
         Picasso.with(mContext)
-                .load(baseUrl + object.PosterUrl)
+                .load(baseUrl + object.getPosterPath())
                 .resize(width, height)
                 .centerCrop()
                 .into(Poster);
