@@ -28,7 +28,7 @@ public class Result {
     private List<Integer> genreIds = new ArrayList<Integer>();
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private int id;
     @SerializedName("original_title")
     @Expose
     private String originalTitle;
@@ -52,7 +52,7 @@ public class Result {
     private Boolean video;
     @SerializedName("vote_average")
     @Expose
-    private Double voteAverage;
+    private double voteAverage;
 
     /**
      *

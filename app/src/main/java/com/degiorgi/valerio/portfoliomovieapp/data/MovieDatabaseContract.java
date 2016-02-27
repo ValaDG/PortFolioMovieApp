@@ -24,13 +24,13 @@ public interface MovieDatabaseContract {
     public static final String PosterUrl = "PosterUrl";
 
     @DataType(DataType.Type.TEXT) @NotNull
-    public static final String OriginalTitle ="Original Title";
+    public static final String OriginalTitle ="OriginalTitle";
 
     @DataType(DataType.Type.TEXT) @NotNull
     public static final String Overview ="Overview";
 
     @DataType(DataType.Type.TEXT) @NotNull
-    public static final String ReleaseDate ="Release Date";
+    public static final String ReleaseDate ="ReleaseDate";
 
     @DataType(DataType.Type.REAL) @NotNull
     public static final String UserRating ="Rating";

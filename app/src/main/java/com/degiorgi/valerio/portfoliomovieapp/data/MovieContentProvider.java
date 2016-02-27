@@ -13,7 +13,7 @@ import net.simonvt.schematic.annotation.TableEndpoint;
 @ContentProvider(authority = MovieContentProvider.AUTHORITY, database = MovieLocalDatabase.class)
 public final class MovieContentProvider {
 
-    public static final String AUTHORITY = "com.degiorgi.valerio.portfoliomovieapp.data.MovieContentProvider";
+    public static final String AUTHORITY = "com.degiorgi.valerio.portfoliomovieapp";
 
     static final Uri BASE_CONTENT_URI = Uri.parse("content://" + AUTHORITY);
 
@@ -41,7 +41,8 @@ public final class MovieContentProvider {
 
         @ContentUri(
                 path = Path.Local_Movies,
-                type = "vnd.android.cursor.dir/Local_Movies")
+                type = "vnd.android.cursor.dir/Local_Movies"
+                )
 
         public static final Uri CONTENT_URI = buildUri(Path.Local_Movies);
 
@@ -68,7 +69,9 @@ public final class MovieContentProvider {
 
         @ContentUri(
                 path = Path.Favourite_Movies,
-                type = "vnd.android.cursor.dir/Favourite_Movies")
+                type = "vnd.android.cursor.dir/Favourite_Movies"
+
+        )
 
         public static final Uri CONTENT_URI = buildUri(Path.Local_Movies);
 
