@@ -42,7 +42,7 @@ public class MovieFragment extends Fragment implements LoaderManager.LoaderCallb
     public CursorMovieAdapter mCursorAdapater;
     List<Result> Movies = new ArrayList<>();
     Call<MovieApiRequest> CallMovies;
-    String api_key = "";
+    String api_key = "241141bc665e9b2d0fb9ac4759497786";
 
     private void UpdateMovies() { //Executes the background Network Call
 
@@ -116,6 +116,8 @@ public class MovieFragment extends Fragment implements LoaderManager.LoaderCallb
                         ;
 
                     }
+
+
                 }
             }
 
@@ -196,7 +198,16 @@ public class MovieFragment extends Fragment implements LoaderManager.LoaderCallb
         mCursorAdapater.swapCursor(null);
     }
 
+    public void onSortChanged( ) {
+        UpdateMovies();
+        getLoaderManager().restartLoader(LOADER_ID, null, this);
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        onSortChanged();
+    }
 }
 
 
