@@ -98,6 +98,7 @@ public class MovieFragment extends Fragment {
                         cVector.toArray(cArray);
                         inserted = getActivity().getContentResolver().bulkInsert(MovieContentProvider.Local_Movies.CONTENT_URI,cArray);
 
+
                     }
 
                     Log.w("LOG TAG",  "INSERTED" + inserted);
