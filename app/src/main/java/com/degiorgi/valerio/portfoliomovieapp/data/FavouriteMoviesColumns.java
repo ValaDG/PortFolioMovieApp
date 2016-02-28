@@ -18,7 +18,7 @@ public interface FavouriteMoviesColumns {
         @DataType(DataType.Type.INTEGER) @NotNull
         public static final String MovieId ="MovieId";
 
-        @DataType(DataType.Type.TEXT) @NotNull
+        @DataType(DataType.Type.TEXT)
         public static final String PosterUrl = "PosterUrl";
 
         @DataType(DataType.Type.TEXT) @NotNull
