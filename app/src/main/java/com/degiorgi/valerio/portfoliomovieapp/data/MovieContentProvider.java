@@ -13,7 +13,7 @@ import net.simonvt.schematic.annotation.TableEndpoint;
 @ContentProvider(authority = MovieContentProvider.AUTHORITY, database = MovieLocalDatabase.class)
 public final class MovieContentProvider {
 
-    public static final String AUTHORITY = "com.degiorgi.valerio.portfoliomovieapp";
+    public static final String AUTHORITY = "com.degiorgi.valerio.portfoliomovieapp.data.MovieContentProvider";
 
     static final Uri BASE_CONTENT_URI = Uri.parse("content://" + AUTHORITY);
 

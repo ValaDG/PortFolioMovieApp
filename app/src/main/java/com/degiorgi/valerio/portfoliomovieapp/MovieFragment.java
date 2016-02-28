@@ -87,6 +87,7 @@ public class MovieFragment extends Fragment {
                         MovieValues.put(MovieDatabaseContract.ReleaseDate, releaseDate);
                         MovieValues.put(MovieDatabaseContract.UserRating, voteAverage);
 
+
                         cVector.add(MovieValues);
                     }
 

@@ -14,9 +14,7 @@ public interface MovieDatabaseContract {
     @DataType(DataType.Type.INTEGER)
     @PrimaryKey
     @AutoIncrement
-
     public static final String _ID = "_id";
-
     @DataType(DataType.Type.INTEGER) @NotNull
     public static final String MovieId ="MovieId";
 

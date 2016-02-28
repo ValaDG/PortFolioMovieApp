@@ -16,6 +16,6 @@ public final class MovieLocalDatabase {
 
     @Table(MovieDatabaseContract.class) public static final String LOCAL_MOVIES = "Local_Movies";
 
-    @Table(MovieDatabaseContract.class) public static final String FAVOURITE_MOVIES ="Favourite_Movies";
+    @Table(FavouriteMoviesColumns.class) public static final String FAVOURITE_MOVIES ="Favourite_Movies";
 
 }
