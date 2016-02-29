@@ -1,4 +1,4 @@
-package com.degiorgi.valerio.portfoliomovieapp;
+package com.degiorgi.valerio.portfoliomovieapp.UI;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -18,6 +18,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import com.degiorgi.valerio.portfoliomovieapp.adapters.CursorMovieAdapter;
+import com.degiorgi.valerio.portfoliomovieapp.MovieService;
+import com.degiorgi.valerio.portfoliomovieapp.R;
 import com.degiorgi.valerio.portfoliomovieapp.data.MovieContentProvider;
 import com.degiorgi.valerio.portfoliomovieapp.data.MovieDatabaseContract;
 import com.degiorgi.valerio.portfoliomovieapp.models.MovieApiRequest;
@@ -144,7 +147,7 @@ public class MovieFragment extends Fragment implements LoaderManager.LoaderCallb
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-// Create a gridview reference, initialize the adapater, and assign it to the gridview
+
         mCursorAdapater = new CursorMovieAdapter(getActivity(), null, 0);
         View rootView = inflater.inflate(R.layout.movie_fragment_layout, container, false);
 
@@ -168,12 +171,12 @@ public class MovieFragment extends Fragment implements LoaderManager.LoaderCallb
                 String movieIdString = String.valueOf(movieId);
 
                 Intent intent = new Intent(getActivity(), MovieDetailActivity.class)
-                        .putExtra("id",movieIdString)
+                        .putExtra("id", movieIdString)
                         .putExtra("url", url)
                         .putExtra("title", title)
                         .putExtra("release", release)
                         .putExtra("synopsis", synopsis)
-                        .putExtra("rating", rating );
+                        .putExtra("rating", rating);
                 startActivity(intent);
 
 

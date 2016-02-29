@@ -19,15 +19,15 @@
 
 
         </provider>
-        <activity android:name=".MainActivity">
+        <activity android:name=".UI.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MovieDetailActivity"
-            android:parentActivityName=".MainActivity"></activity>
+        <activity android:name=".UI.MovieDetailActivity"
+            android:parentActivityName=".UI.MainActivity"></activity>
         <activity android:name=".SettingsActivity"></activity>
     </application>
 

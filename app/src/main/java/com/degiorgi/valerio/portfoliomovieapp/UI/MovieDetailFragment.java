@@ -1,4 +1,4 @@
-package com.degiorgi.valerio.portfoliomovieapp;
+package com.degiorgi.valerio.portfoliomovieapp.UI;
 
 import android.app.Fragment;
 import android.content.Intent;
@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.degiorgi.valerio.portfoliomovieapp.R;
 import com.squareup.picasso.Picasso;
 
 /**
