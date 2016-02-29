@@ -1,6 +1,5 @@
 package com.degiorgi.valerio.portfoliomovieapp.UI;
 
-import android.app.Fragment;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
@@ -14,13 +13,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.degiorgi.valerio.portfoliomovieapp.retrofitInterface.MovieService;
 import com.degiorgi.valerio.portfoliomovieapp.R;
 import com.degiorgi.valerio.portfoliomovieapp.adapters.MovieTrailersAdapter;
 import com.degiorgi.valerio.portfoliomovieapp.models.MovieReviewsForId;
 import com.degiorgi.valerio.portfoliomovieapp.models.MovieTrailersForId;
 import com.degiorgi.valerio.portfoliomovieapp.models.SingleReviewResult;
 import com.degiorgi.valerio.portfoliomovieapp.models.SingleTrailerResult;
+import com.degiorgi.valerio.portfoliomovieapp.retrofitInterface.MovieService;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -35,12 +34,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * Created by Valerio on 28/02/2016.
  */
-public class MovieDetailFragment extends Fragment
+public class MovieDetailFragment extends android.support.v4.app.Fragment
 
 {
 
     public static final String API_BASE_URL = "http://api.themoviedb.org/";
-    String api_key = "";
+    String api_key = "241141bc665e9b2d0fb9ac4759497786";
     ArrayAdapter<String> mReviewsAdapter;
     MovieTrailersAdapter mTrailerAdapter;
     Call<MovieTrailersForId> callMovies;
