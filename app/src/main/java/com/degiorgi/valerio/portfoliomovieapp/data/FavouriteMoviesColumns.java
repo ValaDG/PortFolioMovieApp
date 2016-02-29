@@ -33,6 +33,9 @@ public interface FavouriteMoviesColumns {
         @DataType(DataType.Type.REAL) @NotNull
         public static final String UserRating ="Rating";
 
+        @DataType(DataType.Type.REAL) @NotNull
+        public static final String Popularity ="Popularity";
+
 
 
 }

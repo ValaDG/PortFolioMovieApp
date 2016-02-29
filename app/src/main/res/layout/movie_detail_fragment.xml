@@ -49,6 +49,18 @@
                 android:textSize="24sp"
                 android:layout_marginLeft="18dp"
                 android:layout_marginTop="18dp"/>
+
+            <Button
+                android:id="@+id/checkbox_favourite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:layout_marginLeft="18dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginRight="18dp"
+                android:text="Make Favourite"
+                android:onClick="favButtonClick"
+                ></Button>
         </LinearLayout>
     </LinearLayout>
     <TextView

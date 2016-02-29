@@ -73,7 +73,7 @@ public final class MovieContentProvider {
 
         )
 
-        public static final Uri CONTENT_URI = buildUri(Path.Local_Movies);
+        public static final Uri CONTENT_URI = buildUri(Path.Favourite_Movies);
 
         @InexactContentUri(
 

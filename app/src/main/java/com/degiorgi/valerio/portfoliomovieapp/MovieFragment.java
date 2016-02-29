@@ -2,6 +2,7 @@ package com.degiorgi.valerio.portfoliomovieapp;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.degiorgi.valerio.portfoliomovieapp.data.MovieContentProvider;
@@ -46,6 +48,7 @@ public class MovieFragment extends Fragment implements LoaderManager.LoaderCallb
 
     private void UpdateMovies() { //Executes the background Network Call
 
+
         Retrofit retrofit = new Retrofit.Builder().baseUrl(API_BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
 
         MovieService.FetchMovieInterface MovieInterface = retrofit.create(MovieService.FetchMovieInterface.class);
@@ -53,6 +56,7 @@ public class MovieFragment extends Fragment implements LoaderManager.LoaderCallb
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String sortBy = preferences.getString(getString(R.string.sort_by_key), getString(R.string.sort_by_default));
+
 
         CallMovies = MovieInterface.getMovies(sortBy, api_key);
 
@@ -141,16 +145,40 @@ public class MovieFragment extends Fragment implements LoaderManager.LoaderCallb
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 // Create a gridview reference, initialize the adapater, and assign it to the gridview
-
         mCursorAdapater = new CursorMovieAdapter(getActivity(), null, 0);
-
-        UpdateMovies();
-
         View rootView = inflater.inflate(R.layout.movie_fragment_layout, container, false);
 
         GridView gridview = (GridView) rootView.findViewById(R.id.gridview_list);
 
         gridview.setAdapter(mCursorAdapater);
+
+        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Cursor cursor = (Cursor) parent.getItemAtPosition(position);
+
+                int movieId = cursor.getInt(1);
+                String url = cursor.getString(2);
+                String title = cursor.getString(3);
+                String release = cursor.getString(5);
+                String synopsis = cursor.getString(4);
+                double userRating = cursor.getDouble(6);
+                String rating = String.valueOf(userRating);
+                String movieIdString = String.valueOf(movieId);
+
+                Intent intent = new Intent(getActivity(), MovieDetailActivity.class)
+                        .putExtra("id",movieIdString)
+                        .putExtra("url", url)
+                        .putExtra("title", title)
+                        .putExtra("release", release)
+                        .putExtra("synopsis", synopsis)
+                        .putExtra("rating", rating );
+                startActivity(intent);
+
+
+            }
+        });
 
 
         return rootView;
@@ -171,20 +199,25 @@ public class MovieFragment extends Fragment implements LoaderManager.LoaderCallb
         String sortBy = preferences.getString(getString(R.string.sort_by_key), getString(R.string.sort_by_default));
 
         String sortOrder;
-        if(sortBy != getString(R.string.sort_by_popularity_value))
-        {
-            sortOrder = MovieDatabaseContract.UserRating +"  DESC";
-        }
-        else {
+
+        if (sortBy == getString(R.string.sort_by_popularity_value) || sortBy == getString(R.string.sort_by_favourite_value)) {
 
             sortOrder = MovieDatabaseContract.Popularity + " DESC";
 
+        } else {
+
+            sortOrder = MovieDatabaseContract.UserRating + "  DESC";
         }
 
+        if(sortBy == getString(R.string.sort_by_favourite_value)){
 
-        return new CursorLoader(getActivity(), MovieContentProvider.Local_Movies.CONTENT_URI,
+            return new CursorLoader(getActivity(),MovieContentProvider.Favourite_Movies.CONTENT_URI,null,null,null,
+                    sortOrder);
+        }
+else {
+    return new CursorLoader(getActivity(), MovieContentProvider.Local_Movies.CONTENT_URI,
                 null, null, null, sortOrder);
-    }
+    }}
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
@@ -198,7 +231,7 @@ public class MovieFragment extends Fragment implements LoaderManager.LoaderCallb
         mCursorAdapater.swapCursor(null);
     }
 
-    public void onSortChanged( ) {
+    public void onSortChanged() {
         UpdateMovies();
         getLoaderManager().restartLoader(LOADER_ID, null, this);
     }
@@ -209,6 +242,7 @@ public class MovieFragment extends Fragment implements LoaderManager.LoaderCallb
         onSortChanged();
     }
 }
+
 
 
 

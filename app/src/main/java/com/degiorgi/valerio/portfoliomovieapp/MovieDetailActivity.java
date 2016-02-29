@@ -1,16 +1,15 @@
 package com.degiorgi.valerio.portfoliomovieapp;
 
-import android.app.Fragment;
-import android.content.Intent;
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.degiorgi.valerio.portfoliomovieapp.data.MovieContentProvider;
+import com.degiorgi.valerio.portfoliomovieapp.data.MovieDatabaseContract;
 
 public class MovieDetailActivity extends AppCompatActivity {
 
@@ -20,40 +19,35 @@ public class MovieDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_movie_detail);
     }
 
+    public void favButtonClick(View view){
 
-    public static class MovieDetailFragment extends Fragment
+        TextView TitleText = (TextView) findViewById(R.id.title_view);
 
-    {
+        String[] args = {TitleText.getText().toString()};
 
-        //Single detail activity for single movies, we receive the intents from the movie fragment and update each view with the correct values
+        ContentResolver resolver = getContentResolver();
 
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Cursor cur  = resolver.query(MovieContentProvider.Local_Movies.CONTENT_URI, null,
+                MovieDatabaseContract.OriginalTitle + "=?", args, null);
 
-            View rootview = inflater.inflate(R.layout.movie_detail_fragment, container, false);
+        if(cur.moveToFirst()) {
 
-            String baseurl = "http://image.tmdb.org/t/p/w185/";
 
-            Intent intent = getActivity().getIntent();
-            if (intent != null) {
-                ImageView PosterImageView = (ImageView) rootview.findViewById(R.id.poster_imageView);
-                Picasso.with(getActivity()).load(baseurl + intent.getStringExtra("url")).into(PosterImageView);
 
-                TextView Title = (TextView) rootview.findViewById(R.id.title_view);
-                Title.setText(intent.getStringExtra("title"));
+            ContentValues values = new ContentValues();
 
-                TextView releaseDate = (TextView) rootview.findViewById(R.id.release_date_view);
-                releaseDate.setText(intent.getStringExtra("release"));
+            values.put("MovieId",cur.getString(1));
+            values.put("PosterUrl",cur.getString(2));
+            values.put("OriginalTitle",cur.getString(3));
+            values.put("Overview",cur.getString(4));
+            values.put("ReleaseDate",cur.getString(5));
+            values.put("Rating",cur.getDouble(6));
+                values.put("Popularity",cur.getString(7));
 
-                TextView UserRating = (TextView) rootview.findViewById(R.id.users_rating_view);
+                resolver.insert(MovieContentProvider.Favourite_Movies.CONTENT_URI, values);
 
-                UserRating.setText(intent.getStringExtra("rating"));
 
-                TextView OverView = (TextView) rootview.findViewById(R.id.synopsis_view);
-                OverView.setText(intent.getStringExtra("synopsis"));
-            }
-            return rootview;
+
         }
-
     }
-}
+   }

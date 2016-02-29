@@ -4,7 +4,7 @@
 
     <string name="sort_by_key">sortBy</string>
 
-<string name="sort_by_setting_title">Sort Movies By </string>
+    <string name="sort_by_setting_title">Sort Movies By </string>
 
     <string name="sort_by_default">popularity.desc</string>
 
@@ -15,5 +15,10 @@
     <string name="sort_by_popularity_value">popularity.desc</string>
 
     <string name="sort_by_highest_rated_value">vote_average.desc</string>
+
+    <string name="sort_by_favourite">Favourite</string>
+
+    <string name="sort_by_favourite_value">favourite</string>
+
     <string name="settings">Settings</string>
 </resources>
