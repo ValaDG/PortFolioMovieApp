@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.degiorgi.valerio.portfoliomovieapp.data.FavouriteMoviesColumns;
 import com.degiorgi.valerio.portfoliomovieapp.data.MovieContentProvider;
 import com.degiorgi.valerio.portfoliomovieapp.data.MovieDatabaseContract;
 
@@ -32,9 +33,17 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         if(cur.moveToFirst()) {
 
+            String[] idArgs ={cur.getString(1)};
+            Cursor cursorCheck = resolver.query(MovieContentProvider.Favourite_Movies.CONTENT_URI,
+                    null,
+                    FavouriteMoviesColumns.MovieId + "=?",
+                    idArgs,
+                    null);
+
+            if (!cursorCheck.moveToFirst())  {
 
 
-            ContentValues values = new ContentValues();
+                ContentValues values = new ContentValues();
 
             values.put("MovieId",cur.getString(1));
             values.put("PosterUrl",cur.getString(2));
@@ -46,7 +55,7 @@ public class MovieDetailActivity extends AppCompatActivity {
 
                 resolver.insert(MovieContentProvider.Favourite_Movies.CONTENT_URI, values);
 
-
+            }
 
         }
     }
