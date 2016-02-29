@@ -1,11 +1,14 @@
 package com.degiorgi.valerio.portfoliomovieapp.UI;
 
 import android.app.Fragment;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -13,9 +16,11 @@ import android.widget.TextView;
 
 import com.degiorgi.valerio.portfoliomovieapp.MovieService;
 import com.degiorgi.valerio.portfoliomovieapp.R;
+import com.degiorgi.valerio.portfoliomovieapp.adapters.MovieTrailersAdapter;
 import com.degiorgi.valerio.portfoliomovieapp.models.MovieReviewsForId;
 import com.degiorgi.valerio.portfoliomovieapp.models.MovieTrailersForId;
 import com.degiorgi.valerio.portfoliomovieapp.models.SingleReviewResult;
+import com.degiorgi.valerio.portfoliomovieapp.models.SingleTrailerResult;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -37,6 +42,7 @@ public class MovieDetailFragment extends Fragment
     public static final String API_BASE_URL = "http://api.themoviedb.org/";
     String api_key = "241141bc665e9b2d0fb9ac4759497786";
     ArrayAdapter<String> mReviewsAdapter;
+    MovieTrailersAdapter mTrailerAdapter;
 
     String url;
     String title;
@@ -89,19 +95,61 @@ public class MovieDetailFragment extends Fragment
         ListView reviewsListView = (ListView) rootview.findViewById(R.id.reviews_listview);
         reviewsListView.setAdapter(mReviewsAdapter);
 
+
+        mTrailerAdapter = new MovieTrailersAdapter(getActivity(),new ArrayList<SingleTrailerResult>());
+
+        getTrailers(id);
+
+        ListView trailersListView = (ListView) rootview.findViewById(R.id.trailers_listview);
+        trailersListView.setAdapter(mTrailerAdapter);
+
+        trailersListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                SingleTrailerResult result = (SingleTrailerResult) parent.getItemAtPosition(position);
+
+               String MovieId = result.getKey();
+
+                try {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:" + MovieId));
+                    startActivity(intent);
+                } catch (ActivityNotFoundException ex) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("http://www.youtube.com/watch?v=" + MovieId));
+                    startActivity(intent);
+                }
+            }
+        });
         return rootview;
     }
 
 
-    public ArrayList<String> getTrailers(int id){
+    public void getTrailers(int id){
 
         Retrofit retrofit = new Retrofit.Builder().baseUrl(API_BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
 
         MovieService.FetchMovieInterface MovieInterface = retrofit.create(MovieService.FetchMovieInterface.class);
 
-        Call<MovieTrailersForId> callMovies = MovieInterface.getMovieTrailers(id,api_key);
+        Call<MovieTrailersForId> callMovies = MovieInterface.getMovieTrailers(id, api_key);
 
-        return new ArrayList<>();
+        callMovies.enqueue(new Callback<MovieTrailersForId>() {
+            @Override
+            public void onResponse(Call<MovieTrailersForId> call, Response<MovieTrailersForId> response) {
+
+                List<SingleTrailerResult> singleTrailerList = response.body().getResults();
+
+                for (SingleTrailerResult result : singleTrailerList) {
+
+                    mTrailerAdapter.add(result);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MovieTrailersForId> call, Throwable t) {
+
+            }
+        });
     }
 
     public void getReviews(int id){
@@ -110,7 +158,7 @@ public class MovieDetailFragment extends Fragment
 
         MovieService.FetchMovieInterface MovieInterface = retrofit.create(MovieService.FetchMovieInterface.class);
 
-        Call<MovieReviewsForId> callReviews = MovieInterface.getMovieReviews(id,api_key);
+        Call<MovieReviewsForId> callReviews = MovieInterface.getMovieReviews(id, api_key);
 
         callReviews.enqueue(new Callback<MovieReviewsForId>() {
             @Override
@@ -137,5 +185,6 @@ public class MovieDetailFragment extends Fragment
         });
 
     }
+
 
 }
