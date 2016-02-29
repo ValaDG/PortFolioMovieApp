@@ -23,7 +23,6 @@ public class CursorMovieAdapter extends CursorAdapter {
     }
 
 
-
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         View view = LayoutInflater.from(context).inflate(R.layout.gridview_item, parent, false);
@@ -37,10 +36,10 @@ public class CursorMovieAdapter extends CursorAdapter {
 
         final String baseUrl = "http://image.tmdb.org/t/p/w185/";
 
-       final ImageView img = (ImageView) view;
+        final ImageView img = (ImageView) view;
 
-      final  int width = context.getResources().getDisplayMetrics().widthPixels / 2;
-      final  int height = (int) ((int) width*1.5);
+        final int width = context.getResources().getDisplayMetrics().widthPixels / 2;
+        final int height = (int) ((int) width * 1.5);
 
 
         Picasso.with(context)
@@ -62,7 +61,7 @@ public class CursorMovieAdapter extends CursorAdapter {
                         Picasso.with(context)
                                 .load(baseUrl + cursor.getString(2))
                                 .error(R.drawable.error)
-                                .resize(width,height)
+                                .resize(width, height)
                                 .centerCrop()
                                 .into(img, new Callback() {
                                     @Override
@@ -79,7 +78,6 @@ public class CursorMovieAdapter extends CursorAdapter {
 
                     }
                 });
-
 
 
     }

@@ -20,36 +20,28 @@ public class MovieTrailersForId {
     private List<SingleTrailerResult> results = new ArrayList<SingleTrailerResult>();
 
     /**
-     *
-     * @return
-     * The id
+     * @return The id
      */
     public int getId() {
         return id;
     }
 
     /**
-     *
-     * @param id
-     * The id
+     * @param id The id
      */
     public void setId(int id) {
         this.id = id;
     }
 
     /**
-     *
-     * @return
-     * The results
+     * @return The results
      */
     public List<SingleTrailerResult> getResults() {
         return results;
     }
 
     /**
-     *
-     * @param results
-     * The results
+     * @param results The results
      */
     public void setResults(List<SingleTrailerResult> results) {
         this.results = results;

@@ -10,7 +10,7 @@ import java.util.List;
  * Created by Valerio on 29/02/2016.
  */
 
-    public class MovieReviewsForId {
+public class MovieReviewsForId {
 
     @SerializedName("id")
     @Expose

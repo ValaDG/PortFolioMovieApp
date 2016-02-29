@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.degiorgi.valerio.portfoliomovieapp.MovieService;
+import com.degiorgi.valerio.portfoliomovieapp.retrofitInterface.MovieService;
 import com.degiorgi.valerio.portfoliomovieapp.R;
 import com.degiorgi.valerio.portfoliomovieapp.adapters.MovieTrailersAdapter;
 import com.degiorgi.valerio.portfoliomovieapp.models.MovieReviewsForId;
@@ -40,9 +40,11 @@ public class MovieDetailFragment extends Fragment
 {
 
     public static final String API_BASE_URL = "http://api.themoviedb.org/";
-    String api_key = "241141bc665e9b2d0fb9ac4759497786";
+    String api_key = "";
     ArrayAdapter<String> mReviewsAdapter;
     MovieTrailersAdapter mTrailerAdapter;
+    Call<MovieTrailersForId> callMovies;
+    Call<MovieReviewsForId> callReviews;
 
     String url;
     String title;
@@ -96,7 +98,7 @@ public class MovieDetailFragment extends Fragment
         reviewsListView.setAdapter(mReviewsAdapter);
 
 
-        mTrailerAdapter = new MovieTrailersAdapter(getActivity(),new ArrayList<SingleTrailerResult>());
+        mTrailerAdapter = new MovieTrailersAdapter(getActivity(), new ArrayList<SingleTrailerResult>());
 
         getTrailers(id);
 
@@ -109,7 +111,7 @@ public class MovieDetailFragment extends Fragment
 
                 SingleTrailerResult result = (SingleTrailerResult) parent.getItemAtPosition(position);
 
-               String MovieId = result.getKey();
+                String MovieId = result.getKey();
 
                 try {
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:" + MovieId));
@@ -125,13 +127,13 @@ public class MovieDetailFragment extends Fragment
     }
 
 
-    public void getTrailers(int id){
+    public void getTrailers(int id) {
 
         Retrofit retrofit = new Retrofit.Builder().baseUrl(API_BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
 
         MovieService.FetchMovieInterface MovieInterface = retrofit.create(MovieService.FetchMovieInterface.class);
 
-        Call<MovieTrailersForId> callMovies = MovieInterface.getMovieTrailers(id, api_key);
+        callMovies = MovieInterface.getMovieTrailers(id, api_key);
 
         callMovies.enqueue(new Callback<MovieTrailersForId>() {
             @Override
@@ -152,13 +154,13 @@ public class MovieDetailFragment extends Fragment
         });
     }
 
-    public void getReviews(int id){
+    public void getReviews(int id) {
 
         Retrofit retrofit = new Retrofit.Builder().baseUrl(API_BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
 
         MovieService.FetchMovieInterface MovieInterface = retrofit.create(MovieService.FetchMovieInterface.class);
 
-        Call<MovieReviewsForId> callReviews = MovieInterface.getMovieReviews(id, api_key);
+        callReviews = MovieInterface.getMovieReviews(id, api_key);
 
         callReviews.enqueue(new Callback<MovieReviewsForId>() {
             @Override
@@ -167,13 +169,10 @@ public class MovieDetailFragment extends Fragment
                 List<SingleReviewResult> singleList = response.body().getResults();
 
 
-
-                for(SingleReviewResult result : singleList)
-                {
+                for (SingleReviewResult result : singleList) {
                     mReviewsAdapter.add(result.getContent());
 
                 }
-
 
 
             }
@@ -186,5 +185,10 @@ public class MovieDetailFragment extends Fragment
 
     }
 
-
+    @Override
+    public void onStop() {
+        super.onStop();
+        callMovies.cancel();
+        callReviews.cancel();
+    }
 }

@@ -18,9 +18,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
-import com.degiorgi.valerio.portfoliomovieapp.adapters.CursorMovieAdapter;
-import com.degiorgi.valerio.portfoliomovieapp.MovieService;
+import com.degiorgi.valerio.portfoliomovieapp.retrofitInterface.MovieService;
 import com.degiorgi.valerio.portfoliomovieapp.R;
+import com.degiorgi.valerio.portfoliomovieapp.adapters.CursorMovieAdapter;
 import com.degiorgi.valerio.portfoliomovieapp.data.MovieContentProvider;
 import com.degiorgi.valerio.portfoliomovieapp.data.MovieDatabaseContract;
 import com.degiorgi.valerio.portfoliomovieapp.models.MovieApiRequest;
@@ -47,7 +47,7 @@ public class MovieFragment extends Fragment implements LoaderManager.LoaderCallb
     public CursorMovieAdapter mCursorAdapater;
     List<Result> Movies = new ArrayList<>();
     Call<MovieApiRequest> CallMovies;
-    String api_key = "241141bc665e9b2d0fb9ac4759497786";
+    String api_key = "";
 
     private void UpdateMovies() { //Executes the background Network Call
 
@@ -212,15 +212,15 @@ public class MovieFragment extends Fragment implements LoaderManager.LoaderCallb
             sortOrder = MovieDatabaseContract.UserRating + "  DESC";
         }
 
-        if(sortBy == getString(R.string.sort_by_favourite_value)){
+        if (sortBy == getString(R.string.sort_by_favourite_value)) {
 
-            return new CursorLoader(getActivity(),MovieContentProvider.Favourite_Movies.CONTENT_URI,null,null,null,
+            return new CursorLoader(getActivity(), MovieContentProvider.Favourite_Movies.CONTENT_URI, null, null, null,
                     sortOrder);
+        } else {
+            return new CursorLoader(getActivity(), MovieContentProvider.Local_Movies.CONTENT_URI,
+                    null, null, null, sortOrder);
         }
-else {
-    return new CursorLoader(getActivity(), MovieContentProvider.Local_Movies.CONTENT_URI,
-                null, null, null, sortOrder);
-    }}
+    }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {

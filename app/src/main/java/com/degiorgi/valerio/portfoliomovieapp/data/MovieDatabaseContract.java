@@ -15,27 +15,32 @@ public interface MovieDatabaseContract {
     @PrimaryKey
     @AutoIncrement
     public static final String _ID = "_id";
-    @DataType(DataType.Type.INTEGER) @NotNull
-    public static final String MovieId ="MovieId";
+    @DataType(DataType.Type.INTEGER)
+    @NotNull
+    public static final String MovieId = "MovieId";
 
     @DataType(DataType.Type.TEXT)
     public static final String PosterUrl = "PosterUrl";
 
-    @DataType(DataType.Type.TEXT) @NotNull
-    public static final String OriginalTitle ="OriginalTitle";
+    @DataType(DataType.Type.TEXT)
+    @NotNull
+    public static final String OriginalTitle = "OriginalTitle";
 
-    @DataType(DataType.Type.TEXT) @NotNull
-    public static final String Overview ="Overview";
+    @DataType(DataType.Type.TEXT)
+    @NotNull
+    public static final String Overview = "Overview";
 
-    @DataType(DataType.Type.TEXT) @NotNull
-    public static final String ReleaseDate ="ReleaseDate";
+    @DataType(DataType.Type.TEXT)
+    @NotNull
+    public static final String ReleaseDate = "ReleaseDate";
 
-    @DataType(DataType.Type.REAL) @NotNull
-    public static final String UserRating ="Rating";
+    @DataType(DataType.Type.REAL)
+    @NotNull
+    public static final String UserRating = "Rating";
 
-    @DataType(DataType.Type.REAL) @NotNull
-    public static final String Popularity ="Popularity";
-
+    @DataType(DataType.Type.REAL)
+    @NotNull
+    public static final String Popularity = "Popularity";
 
 
 }

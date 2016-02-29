@@ -7,7 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.degiorgi.valerio.portfoliomovieapp.R;
-import com.degiorgi.valerio.portfoliomovieapp.SettingsActivity;
+import com.degiorgi.valerio.portfoliomovieapp.settings.SettingsActivity;
 
 import static com.degiorgi.valerio.portfoliomovieapp.R.layout;
 
@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-getMenuInflater().inflate(R.menu.main_menu,menu);
+        getMenuInflater().inflate(R.menu.main_menu, menu);
 
         return true;
     }
@@ -32,9 +32,8 @@ getMenuInflater().inflate(R.menu.main_menu,menu);
 
         int id = item.getItemId();
 
-        if(id == R.id.action_settings)
-        {
-        startActivity(new Intent(this, SettingsActivity.class));
+        if (id == R.id.action_settings) {
+            startActivity(new Intent(this, SettingsActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }

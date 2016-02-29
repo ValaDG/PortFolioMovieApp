@@ -1,4 +1,4 @@
-package com.degiorgi.valerio.portfoliomovieapp;
+package com.degiorgi.valerio.portfoliomovieapp.retrofitInterface;
 
 import com.degiorgi.valerio.portfoliomovieapp.models.MovieApiRequest;
 import com.degiorgi.valerio.portfoliomovieapp.models.MovieReviewsForId;
@@ -19,12 +19,12 @@ public class MovieService {
     public interface FetchMovieInterface {
 
         @GET("3/discover/movie")
-        Call<MovieApiRequest> getMovies(@Query("sort_by")String sort , @Query("api_key") String key);
+        Call<MovieApiRequest> getMovies(@Query("sort_by") String sort, @Query("api_key") String key);
 
         @GET("3/movie/{id}/videos")
-        Call<MovieTrailersForId> getMovieTrailers (@Path("id") int id, @Query("api_key")String key);
+        Call<MovieTrailersForId> getMovieTrailers(@Path("id") int id, @Query("api_key") String key);
 
         @GET("3/movie/{id}/reviews")
-        Call<MovieReviewsForId> getMovieReviews (@Path("id")int id, @Query("api_key")String key);
+        Call<MovieReviewsForId> getMovieReviews(@Path("id") int id, @Query("api_key") String key);
     }
 }

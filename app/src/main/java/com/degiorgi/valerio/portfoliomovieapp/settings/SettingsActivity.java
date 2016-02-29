@@ -1,4 +1,4 @@
-package com.degiorgi.valerio.portfoliomovieapp;
+package com.degiorgi.valerio.portfoliomovieapp.settings;
 
 import android.os.Bundle;
 import android.preference.ListPreference;
@@ -6,10 +6,12 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 
-public  class SettingsActivity extends PreferenceActivity  implements Preference.OnPreferenceChangeListener
-{
+import com.degiorgi.valerio.portfoliomovieapp.R;
+
+public class SettingsActivity extends PreferenceActivity implements Preference.OnPreferenceChangeListener {
     private final String pop = "popularity.desc";
     private final String vote = "vote_average.desc";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

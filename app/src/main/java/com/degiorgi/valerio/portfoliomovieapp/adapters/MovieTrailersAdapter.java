@@ -23,11 +23,9 @@ public class MovieTrailersAdapter extends ArrayAdapter<SingleTrailerResult> {
     public MovieTrailersAdapter(Context context, ArrayList<SingleTrailerResult> objects) {
         super(context, R.layout.single_list_item_textview, objects);
 
-        mContext =context;
+        mContext = context;
 
     }
-
-
 
 
     @Override

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.degiorgi.valerio.portfoliomovieapp.R;
 import com.degiorgi.valerio.portfoliomovieapp.data.FavouriteMoviesColumns;
@@ -56,8 +57,15 @@ public class MovieDetailActivity extends AppCompatActivity {
 
                 resolver.insert(MovieContentProvider.Favourite_Movies.CONTENT_URI, values);
 
-            }
+                Toast toast = Toast.makeText(getApplicationContext(), "Movie saved in your Favorites!", Toast.LENGTH_SHORT);
+                toast.show();
 
+            }
+            cursorCheck.close();
         }
+
+        cur.close();
     }
+
+
 }

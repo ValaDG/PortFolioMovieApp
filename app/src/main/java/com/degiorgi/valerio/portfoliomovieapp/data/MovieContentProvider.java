@@ -17,13 +17,6 @@ public final class MovieContentProvider {
 
     static final Uri BASE_CONTENT_URI = Uri.parse("content://" + AUTHORITY);
 
-    interface Path {
-
-        String Local_Movies = "Local_Movies";
-        String Favourite_Movies = "Favourite_Movies";
-
-    }
-
     private static Uri buildUri(String... paths) {
 
         Uri.Builder builder = BASE_CONTENT_URI.buildUpon();
@@ -35,6 +28,12 @@ public final class MovieContentProvider {
         return builder.build();
     }
 
+    interface Path {
+
+        String Local_Movies = "Local_Movies";
+        String Favourite_Movies = "Favourite_Movies";
+
+    }
 
     @TableEndpoint(table = MovieLocalDatabase.LOCAL_MOVIES)
     public static class Local_Movies {
@@ -42,7 +41,7 @@ public final class MovieContentProvider {
         @ContentUri(
                 path = Path.Local_Movies,
                 type = "vnd.android.cursor.dir/Local_Movies"
-                )
+        )
 
         public static final Uri CONTENT_URI = buildUri(Path.Local_Movies);
 

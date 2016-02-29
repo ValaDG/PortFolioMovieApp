@@ -28,7 +28,7 @@
         </activity>
         <activity android:name=".UI.MovieDetailActivity"
             android:parentActivityName=".UI.MainActivity"></activity>
-        <activity android:name=".SettingsActivity"></activity>
+        <activity android:name=".settings.SettingsActivity"></activity>
     </application>
 
 </manifest>
