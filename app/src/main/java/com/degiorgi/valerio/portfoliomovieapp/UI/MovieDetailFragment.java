@@ -43,7 +43,7 @@ public class MovieDetailFragment extends android.support.v4.app.Fragment impleme
 {
 
     public static final String API_BASE_URL = "http://api.themoviedb.org/";
-    String api_key = "241141bc665e9b2d0fb9ac4759497786";
+    String api_key = "";
     ArrayAdapter<String> mReviewsAdapter;
     MovieTrailersAdapter mTrailerAdapter;
     Call<MovieTrailersForId> callMovies;
