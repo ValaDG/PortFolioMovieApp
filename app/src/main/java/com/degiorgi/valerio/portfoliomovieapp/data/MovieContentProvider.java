@@ -51,10 +51,10 @@ public final class MovieContentProvider {
                 name = "MOVIE_ID",
                 path = Path.Local_Movies + "/#",
                 type = "vnd.android.cursor.item/Local_Movie",
-                whereColumn = MovieDatabaseContract._ID,
+                whereColumn = MovieDatabaseContract.MovieId,
                 pathSegment = 1)
 
-        public static Uri withId(long id) {
+        public static Uri withId(int id) {
 
             return buildUri(Path.Local_Movies, String.valueOf(id));
         }

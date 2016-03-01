@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_height="match_parent"
 android:layout_width="match_parent"
-
-    tools:context=".UI.MovieDetailActivity"
-    tools:layout="@layout/movie_detail_fragment"
-    android:name="com.degiorgi.valerio.portfoliomovieapp.UI.MovieDetailFragment">
-
-</fragment>
+    android:id="@+id/movie_detail_container"
+    tools:context=".UI.MovieDetailActivity">
+</FrameLayout>

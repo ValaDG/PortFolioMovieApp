@@ -2,9 +2,9 @@ package com.degiorgi.valerio.portfoliomovieapp.UI;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -18,13 +18,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
-import com.degiorgi.valerio.portfoliomovieapp.retrofitInterface.MovieService;
 import com.degiorgi.valerio.portfoliomovieapp.R;
 import com.degiorgi.valerio.portfoliomovieapp.adapters.CursorMovieAdapter;
 import com.degiorgi.valerio.portfoliomovieapp.data.MovieContentProvider;
 import com.degiorgi.valerio.portfoliomovieapp.data.MovieDatabaseContract;
 import com.degiorgi.valerio.portfoliomovieapp.models.MovieApiRequest;
 import com.degiorgi.valerio.portfoliomovieapp.models.Result;
+import com.degiorgi.valerio.portfoliomovieapp.retrofitInterface.MovieService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +48,12 @@ public class MovieFragment extends Fragment implements LoaderManager.LoaderCallb
     List<Result> Movies = new ArrayList<>();
     Call<MovieApiRequest> CallMovies;
     String api_key = "241141bc665e9b2d0fb9ac4759497786";
+
+
+    public interface backCall {
+
+        public void onGridItemSelected(Uri contentUri);
+    }
 
     private void UpdateMovies() { //Executes the background Network Call
 
@@ -161,23 +167,11 @@ public class MovieFragment extends Fragment implements LoaderManager.LoaderCallb
 
                 Cursor cursor = (Cursor) parent.getItemAtPosition(position);
 
-                int movieId = cursor.getInt(1);
-                String url = cursor.getString(2);
-                String title = cursor.getString(3);
-                String release = cursor.getString(5);
-                String synopsis = cursor.getString(4);
-                double userRating = cursor.getDouble(6);
-                String rating = String.valueOf(userRating);
-                String movieIdString = String.valueOf(movieId);
+                if (cursor != null) {
+                    ((backCall) getActivity())
+                            .onGridItemSelected(MovieContentProvider.Local_Movies.withId(cursor.getInt(1)));
+                }
 
-                Intent intent = new Intent(getActivity(), MovieDetailActivity.class)
-                        .putExtra("id", movieIdString)
-                        .putExtra("url", url)
-                        .putExtra("title", title)
-                        .putExtra("release", release)
-                        .putExtra("synopsis", synopsis)
-                        .putExtra("rating", rating);
-                startActivity(intent);
 
 
             }
@@ -242,7 +236,7 @@ public class MovieFragment extends Fragment implements LoaderManager.LoaderCallb
     @Override
     public void onResume() {
         super.onResume();
-        onSortChanged();
+
     }
 }
 
