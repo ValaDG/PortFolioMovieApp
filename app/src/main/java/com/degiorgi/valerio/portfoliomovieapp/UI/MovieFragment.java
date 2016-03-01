@@ -47,7 +47,7 @@ public class MovieFragment extends Fragment implements LoaderManager.LoaderCallb
     public CursorMovieAdapter mCursorAdapater;
     List<Result> Movies = new ArrayList<>();
     Call<MovieApiRequest> CallMovies;
-    String api_key = "";
+    String api_key = "241141bc665e9b2d0fb9ac4759497786";
 
 
     public interface backCall {

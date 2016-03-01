@@ -8,7 +8,12 @@ import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.ShareActionProvider;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -43,7 +48,7 @@ public class MovieDetailFragment extends android.support.v4.app.Fragment impleme
 {
 
     public static final String API_BASE_URL = "http://api.themoviedb.org/";
-    String api_key = "";
+    String api_key = "241141bc665e9b2d0fb9ac4759497786";
     ArrayAdapter<String> mReviewsAdapter;
     MovieTrailersAdapter mTrailerAdapter;
     Call<MovieTrailersForId> callMovies;
@@ -61,10 +66,14 @@ public class MovieDetailFragment extends android.support.v4.app.Fragment impleme
     TextView OverView;
     ListView reviewsListView;
     ListView trailersListView;
+    private ShareActionProvider mShareActionProvider;
+    String mYoutubeKey;
     //Single detail activity for single movies, we receive the intents from the movie fragment and update each view with the correct values
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        setHasOptionsMenu(true);
 
         Bundle arguments = getArguments();
         if (arguments != null) {
@@ -109,7 +118,33 @@ public class MovieDetailFragment extends android.support.v4.app.Fragment impleme
         });
         return rootview;
     }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        inflater.inflate(R.menu.movie_detail_menu, menu);
 
+        // Retrieve the share menu item
+        MenuItem menuItem = menu.findItem(R.id.menu_item_share);
+
+        // Get the provider and hold onto it to set/change the share intent.
+        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
+
+        if (mYoutubeKey != null) {
+            mShareActionProvider.setShareIntent(createMovieIntent());
+        }
+
+
+    }
+
+    private Intent createMovieIntent() {
+
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "https://www.youtube.com/watch?v=" + mYoutubeKey);
+        sendIntent.setType("text/plain");
+
+        return sendIntent;
+}
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         getLoaderManager().initLoader(DETAIL_LOADER, null, this);
@@ -134,6 +169,11 @@ public class MovieDetailFragment extends android.support.v4.app.Fragment impleme
 
                     mTrailerAdapter.add(result);
                 }
+                try {
+                mYoutubeKey = singleTrailerList.get(0).getKey();
+                if (mShareActionProvider != null) {
+                    mShareActionProvider.setShareIntent(createMovieIntent());
+                } }catch(Exception e){}
             }
 
             @Override
@@ -179,8 +219,6 @@ public class MovieDetailFragment extends android.support.v4.app.Fragment impleme
     @Override
     public void onStop() {
         super.onStop();
-        callMovies.cancel();
-        callReviews.cancel();
     }
 
     @Override
