@@ -24,13 +24,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by Valerio on 01/03/2016.
+ * Its named activity but its in truth a fragment
+ *
  */
 public class ReviewsActivity extends Fragment {
 
     public static final String API_BASE_URL = "http://api.themoviedb.org/";
     ListView reviewsListView;
     ArrayAdapter<String> mReviewsAdapter;
-    String api_key = "241141bc665e9b2d0fb9ac4759497786";
+    String api_key = "";
     Call<MovieReviewsForId> callReviews;
     int id;
 
@@ -61,6 +63,8 @@ public class ReviewsActivity extends Fragment {
 
 
     public void getReviews(int id) {
+
+        //method to grab our reviews based on the movie id
 
         Retrofit retrofit = new Retrofit.Builder().baseUrl(API_BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
 
