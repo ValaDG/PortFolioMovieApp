@@ -29,10 +29,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class ReviewsActivity extends Fragment {
 
-    public static final String API_BASE_URL = "http://api.themoviedb.org/";
     ListView reviewsListView;
     ArrayAdapter<String> mReviewsAdapter;
-    String api_key = "";
     Call<MovieReviewsForId> callReviews;
     int id;
 
@@ -66,11 +64,11 @@ public class ReviewsActivity extends Fragment {
 
         //method to grab our reviews based on the movie id
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(API_BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(getString(R.string.API_BASE_URL)).addConverterFactory(GsonConverterFactory.create()).build();
 
         MovieService.FetchMovieInterface MovieInterface = retrofit.create(MovieService.FetchMovieInterface.class);
 
-        callReviews = MovieInterface.getMovieReviews(id, api_key);
+        callReviews = MovieInterface.getMovieReviews(id, getString(R.string.api_key));
 
         callReviews.enqueue(new Callback<MovieReviewsForId>() {
             @Override

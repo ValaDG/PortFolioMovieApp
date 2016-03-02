@@ -42,17 +42,17 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class MovieFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    public static final String API_BASE_URL = "http://api.themoviedb.org/";
+
     public final static int LOADER_ID = 1;
     public CursorMovieAdapter mCursorAdapater;
     List<Result> Movies = new ArrayList<>();
     Call<MovieApiRequest> CallMovies;
-    String api_key = "";
+
 
     private void UpdateMovies() { //Executes the background Network Call
 
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(API_BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(getString(R.string.API_BASE_URL)).addConverterFactory(GsonConverterFactory.create()).build();
 
         MovieService.FetchMovieInterface MovieInterface = retrofit.create(MovieService.FetchMovieInterface.class);
 
@@ -61,7 +61,7 @@ public class MovieFragment extends Fragment implements LoaderManager.LoaderCallb
         String sortBy = preferences.getString(getString(R.string.sort_by_key), getString(R.string.sort_by_default));
 
 
-        CallMovies = MovieInterface.getMovies(sortBy, api_key);
+        CallMovies = MovieInterface.getMovies(sortBy, getString(R.string.api_key));
 
         CallMovies.enqueue(new Callback<MovieApiRequest>() {
 

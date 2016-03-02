@@ -47,11 +47,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class MovieDetailFragment extends android.support.v4.app.Fragment implements LoaderManager.LoaderCallbacks<Cursor>
 
-{
-    public static final String API_BASE_URL = "http://api.themoviedb.org/";
-    static final String MOVIE_ARG = "movie_id";
+{static final String MOVIE_ARG = "movie_id";
     private static final int DETAIL_LOADER = 0;
-    String api_key = "";
     MovieTrailersAdapter mTrailerAdapter;
     Call<MovieTrailersForId> callMovies;
     String Imagebaseurl = "http://image.tmdb.org/t/p/w185/";
@@ -181,11 +178,11 @@ public class MovieDetailFragment extends android.support.v4.app.Fragment impleme
 
         //gets our trailers by using its ID and feeds the adapter with the trailer name
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(API_BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(getString(R.string.API_BASE_URL)).addConverterFactory(GsonConverterFactory.create()).build();
 
         MovieService.FetchMovieInterface MovieInterface = retrofit.create(MovieService.FetchMovieInterface.class);
 
-        callMovies = MovieInterface.getMovieTrailers(id, api_key);
+        callMovies = MovieInterface.getMovieTrailers(id, getString(R.string.api_key));
 
         callMovies.enqueue(new Callback<MovieTrailersForId>() {
             @Override
