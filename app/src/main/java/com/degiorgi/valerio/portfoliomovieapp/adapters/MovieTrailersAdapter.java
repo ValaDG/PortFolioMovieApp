@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 /**
  * Created by Valerio on 29/02/2016.
+ * Handles entries for the Trailers Listview in the detail view
  */
 
 public class MovieTrailersAdapter extends ArrayAdapter<SingleTrailerResult> {

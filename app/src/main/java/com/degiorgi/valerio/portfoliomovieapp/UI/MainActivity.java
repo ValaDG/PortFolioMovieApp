@@ -23,9 +23,10 @@ import com.degiorgi.valerio.portfoliomovieapp.settings.SettingsActivity;
 
 import static com.degiorgi.valerio.portfoliomovieapp.R.layout;
 
-public class MainActivity extends AppCompatActivity implements MovieFragment.backCall {
+public class MainActivity extends AppCompatActivity implements MovieFragment.backCall, MovieDetailFragment.reviewsCallBack {
 
     private static final String DETAILFRAGMENT_TAG = "DFTAG";
+    private static final String REVIEWSFRAGMENT_TAG = "RWTAG";
 
     private boolean mTwoPane;
     private String mSortBy;
@@ -82,9 +83,9 @@ public class MainActivity extends AppCompatActivity implements MovieFragment.bac
         String sortBy = preferences.getString(getString(R.string.sort_by_key), getString(R.string.sort_by_default));
         // update the location in our second pane using the fragment manager
 
-        if (sortBy!= null && !sortBy.equals(mSortBy)) {
-            MovieFragment ff = (MovieFragment)getSupportFragmentManager().findFragmentById(R.id.movie_fragment);
-            if ( null != ff ) {
+        if (sortBy != null && !sortBy.equals(mSortBy)) {
+            MovieFragment ff = (MovieFragment) getSupportFragmentManager().findFragmentById(R.id.movie_fragment);
+            if (null != ff) {
                 ff.onSortChanged();
             }
         }
@@ -112,6 +113,24 @@ public class MainActivity extends AppCompatActivity implements MovieFragment.bac
         }
     }
 
+    @Override
+    public void onReviewsButtonClicked(String id) {
+        if (mTwoPane) {
+            // In two-pane mode, show the reviews Listview in this activity by
+            // adding or replacing the detail fragment using a
+            // fragment transaction.
+            Bundle args = new Bundle();
+            args.putString("ReviewsMovieId", id);
+
+            ReviewsActivity fragment = new ReviewsActivity();
+            fragment.setArguments(args);
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.movie_detail_container, fragment, REVIEWSFRAGMENT_TAG)
+                    .commit();
+
+        }
+    }
 
     public void favButtonClick(View view) {
 

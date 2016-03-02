@@ -7,6 +7,8 @@ import com.squareup.picasso.Picasso;
 
 /**
  * Created by Valerio on 29/02/2016.
+ * Takes over the cache control of Picasso to allow for more disk caching
+ * Courtesy of Stack Overflow
  */
 public class Global extends Application {
     @Override

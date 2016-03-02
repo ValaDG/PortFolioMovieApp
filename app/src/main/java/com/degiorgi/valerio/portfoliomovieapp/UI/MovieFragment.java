@@ -49,12 +49,6 @@ public class MovieFragment extends Fragment implements LoaderManager.LoaderCallb
     Call<MovieApiRequest> CallMovies;
     String api_key = "241141bc665e9b2d0fb9ac4759497786";
 
-
-    public interface backCall {
-
-        public void onGridItemSelected(Uri contentUri);
-    }
-
     private void UpdateMovies() { //Executes the background Network Call
 
 
@@ -148,7 +142,6 @@ public class MovieFragment extends Fragment implements LoaderManager.LoaderCallb
         getLoaderManager().initLoader(LOADER_ID, null, this);
     }
 
-
     @Override
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -173,7 +166,6 @@ public class MovieFragment extends Fragment implements LoaderManager.LoaderCallb
                 }
 
 
-
             }
         });
 
@@ -187,7 +179,6 @@ public class MovieFragment extends Fragment implements LoaderManager.LoaderCallb
         super.onStop();
         CallMovies.cancel();
     }
-
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
@@ -221,7 +212,6 @@ public class MovieFragment extends Fragment implements LoaderManager.LoaderCallb
         mCursorAdapater.swapCursor(data);
     }
 
-
     @Override
     public void onLoaderReset(Loader loader) {
 
@@ -233,11 +223,13 @@ public class MovieFragment extends Fragment implements LoaderManager.LoaderCallb
         getLoaderManager().restartLoader(LOADER_ID, null, this);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
+    public interface backCall {
+
+        public void onGridItemSelected(Uri contentUri);
 
     }
+
+
 }
 
 

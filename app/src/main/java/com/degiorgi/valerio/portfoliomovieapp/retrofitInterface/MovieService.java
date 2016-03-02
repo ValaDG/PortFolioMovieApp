@@ -11,6 +11,7 @@ import retrofit2.http.Query;
 
 /**
  * Created by Valerio on 26/02/2016.
+ * Retrofit interface for all API calls
  */
 
 

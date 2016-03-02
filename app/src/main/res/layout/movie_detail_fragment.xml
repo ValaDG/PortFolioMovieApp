@@ -1,93 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent">
-
-    <LinearLayout
-    android:layout_height="match_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    >
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/title_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="36sp"
-        android:padding="30dp"
-
-        android:background="#6239f9"
-        android:textColor="#fffefe"
-        android:autoText="false" />
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/poster_imageView"
-            android:layout_width="150dp"
-            android:layout_height="225dp"
-            android:layout_margin="10dp"/>
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/release_date_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="24sp"
-                android:layout_marginLeft="18dp"
-                android:layout_marginTop="30dp"/>
-            <TextView
-                android:id="@+id/users_rating_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="24sp"
-                android:layout_marginLeft="18dp"
-                android:layout_marginTop="18dp"/>
-
-            <Button
-                android:id="@+id/button_favourite"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:layout_marginLeft="18dp"
-                android:layout_marginTop="18dp"
-                android:layout_marginRight="18dp"
-                android:text="Make Favourite"
-                android:onClick="favButtonClick"
-                ></Button>
-        </LinearLayout>
-    </LinearLayout>
-    <TextView
-        android:id="@+id/synopsis_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:textSize="18sp"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/title_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autoText="false"
+            android:background="#6239f9"
+
+            android:padding="30dp"
+            android:textColor="#fffefe"
+            android:textSize="36sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/poster_imageView"
+                android:layout_width="150dp"
+                android:layout_height="225dp"
+                android:layout_margin="10dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/release_date_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginTop="30dp"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/users_rating_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginTop="18dp"
+                    android:textSize="24sp" />
+
+                <Button
+                    android:id="@+id/button_favourite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginRight="18dp"
+                    android:layout_marginTop="18dp"
+                    android:onClick="favButtonClick"
+                    android:text="Make Favourite"
+                    android:textSize="16sp"></Button>
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/synopsis_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:textSize="18sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Trailers"/>
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/Trailers"
+            android:textAllCaps="true"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <ListView
+            android:id="@+id/trailers_listview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/trailers_listview">
-        </ListView>
+            android:layout_height="wrap_content"></ListView>
 
-        <TextView
+        <Button
+            android:id="@+id/reviews_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Reviews"/>
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:text="@string/Reviews" />
 
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/reviews_listview"></ListView>
 
-</LinearLayout>
+    </LinearLayout>
 </ScrollView>

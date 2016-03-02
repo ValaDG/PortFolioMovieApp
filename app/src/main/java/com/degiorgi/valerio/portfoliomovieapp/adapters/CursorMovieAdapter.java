@@ -16,6 +16,8 @@ import com.squareup.picasso.Picasso;
 
 /**
  * Created by Valerio on 28/02/2016.
+ *
+ * handles the movie url loading and disk caching
  */
 public class CursorMovieAdapter extends CursorAdapter {
     public CursorMovieAdapter(Context context, Cursor c, int flags) {
@@ -40,6 +42,9 @@ public class CursorMovieAdapter extends CursorAdapter {
 
         final int width = context.getResources().getDisplayMetrics().widthPixels / 2;
         final int height = (int) ((int) width * 1.5);
+
+        //Uses Picasso to load images into the Gridview, uses the disk cache first and when it fails it goes online.
+        //It works, but its the cause of the images dopplegangers on first launch?
 
 
         Picasso.with(context)
