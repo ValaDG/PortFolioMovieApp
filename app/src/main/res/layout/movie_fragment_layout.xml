@@ -6,10 +6,11 @@
 
     <GridView
         android:id="@+id/gridview_list"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#ffffff"
-        android:numColumns="2">
+        android:numColumns="2"
+        >
 
     </GridView>
 

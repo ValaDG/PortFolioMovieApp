@@ -6,6 +6,7 @@
     <ListView
         android:id="@+id/reviews_listview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></ListView>
+        android:layout_height="wrap_content"
+       ></ListView>
 
 </FrameLayout>

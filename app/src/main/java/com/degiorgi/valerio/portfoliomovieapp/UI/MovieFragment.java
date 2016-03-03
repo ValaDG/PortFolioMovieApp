@@ -152,6 +152,9 @@ public class MovieFragment extends Fragment implements LoaderManager.LoaderCallb
 
         GridView gridview = (GridView) rootView.findViewById(R.id.gridview_list);
 
+
+
+
         gridview.setAdapter(mCursorAdapater);
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
