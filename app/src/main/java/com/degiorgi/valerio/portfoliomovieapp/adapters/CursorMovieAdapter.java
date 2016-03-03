@@ -42,13 +42,14 @@ public class CursorMovieAdapter extends CursorAdapter {
 
         final int width = context.getResources().getDisplayMetrics().widthPixels / 2;
         final int height = (int) ((int) width * 1.5);
+        final String url = baseUrl + cursor.getString(2);
 
         //Uses Picasso to load images into the Gridview, uses the disk cache first and when it fails it goes online.
-        //It works, but its the cause of the images dopplegangers on first launch?
+
 
 
         Picasso.with(context)
-                .load(baseUrl + cursor.getString(2))
+                .load(url)
                 .networkPolicy(NetworkPolicy.OFFLINE)
                 .resize(width, height)
                 .centerCrop()
@@ -64,7 +65,7 @@ public class CursorMovieAdapter extends CursorAdapter {
                     public void onError() {
 
                         Picasso.with(context)
-                                .load(baseUrl + cursor.getString(2))
+                                .load(url)
                                 .error(R.drawable.error)
                                 .resize(width, height)
                                 .centerCrop()
