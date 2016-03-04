@@ -47,8 +47,8 @@ public class ReviewsActivity extends Fragment {
         }
 
         mReviewsAdapter = new ArrayAdapter<String>(getActivity(),
-                R.layout.single_list_item_textview,
-                R.id.single_item_textview_id,
+                R.layout.reviews_listview_item,
+                R.id.reviews_listview_item,
                 new ArrayList<String>());
 
 

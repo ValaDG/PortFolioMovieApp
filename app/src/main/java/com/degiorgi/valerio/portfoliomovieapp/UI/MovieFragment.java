@@ -147,15 +147,16 @@ public class MovieFragment extends Fragment implements LoaderManager.LoaderCallb
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 
+
+
+
         mCursorAdapater = new CursorMovieAdapter(getActivity(), null, 0);
         View rootView = inflater.inflate(R.layout.movie_fragment_layout, container, false);
 
         GridView gridview = (GridView) rootView.findViewById(R.id.gridview_list);
 
-
-
-
         gridview.setAdapter(mCursorAdapater);
+
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -167,10 +168,9 @@ public class MovieFragment extends Fragment implements LoaderManager.LoaderCallb
                     ((backCall) getActivity())
                             .onGridItemSelected(MovieContentProvider.Local_Movies.withId(cursor.getInt(1)));
                 }
-
-
             }
         });
+
 
 
         return rootView;
