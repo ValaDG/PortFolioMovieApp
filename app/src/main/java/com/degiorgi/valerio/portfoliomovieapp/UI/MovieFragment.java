@@ -71,7 +71,8 @@ public class MovieFragment extends Fragment implements LoaderManager.LoaderCallb
                 if (response != null) {
 
                     MovieApiRequest request = response.body();
-                    Movies = request.getResults();
+                    if (request.getResults() != null){
+                        Movies = request.getResults();
 
                     ContentResolver resolver = getActivity().getContentResolver();
                     String[] args = {Movies.get(0).getId().toString()};
@@ -124,7 +125,7 @@ public class MovieFragment extends Fragment implements LoaderManager.LoaderCallb
 
                     }
 
-
+                }
                 }
             }
 
