@@ -13,7 +13,7 @@ public final class MovieLocalDatabase {
   public static final int VERSION = 1;
   @Table(MovieDatabaseContract.class)
   public static final String LOCAL_MOVIES = "Local_Movies";
-  @Table(FavouriteMoviesColumns.class)
+  @Table(MovieDatabaseContract.class)
   public static final String FAVOURITE_MOVIES = "Favourite_Movies";
 
   private MovieLocalDatabase() {

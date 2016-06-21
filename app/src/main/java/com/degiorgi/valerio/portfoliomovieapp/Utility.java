@@ -7,7 +7,6 @@ import android.database.Cursor;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.degiorgi.valerio.portfoliomovieapp.data.FavouriteMoviesColumns;
 import com.degiorgi.valerio.portfoliomovieapp.data.MovieContentProvider;
 import com.degiorgi.valerio.portfoliomovieapp.data.MovieDatabaseContract;
 
@@ -30,7 +29,7 @@ public class Utility {
         String[] idArgs = {cur.getString(1)};
         Cursor cursorCheck = resolver.query(MovieContentProvider.Favourite_Movies.CONTENT_URI,
             null,
-            FavouriteMoviesColumns.MovieId + "=?",
+            MovieDatabaseContract.MovieId + "=?",
             idArgs,
             null);
 

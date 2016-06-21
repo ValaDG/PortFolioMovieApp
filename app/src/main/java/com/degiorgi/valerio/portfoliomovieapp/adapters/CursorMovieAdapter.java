@@ -20,6 +20,9 @@ import com.squareup.picasso.Picasso;
  * handles the movie url loading and disk caching
  */
 public class CursorMovieAdapter extends CursorAdapter {
+
+  final String baseUrl = "http://image.tmdb.org/t/p/w185/";
+
   public CursorMovieAdapter(Context context, Cursor c, int flags) {
     super(context, c, flags);
   }
@@ -27,16 +30,13 @@ public class CursorMovieAdapter extends CursorAdapter {
 
   @Override
   public View newView(Context context, Cursor cursor, ViewGroup parent) {
-    View view = LayoutInflater.from(context).inflate(R.layout.gridview_item, parent, false);
 
-    return view;
+    return LayoutInflater.from(context).inflate(R.layout.gridview_item, parent, false);
   }
 
 
   @Override
   public void bindView(View view, final Context context, final Cursor cursor) {
-
-    final String baseUrl = "http://image.tmdb.org/t/p/w185/";
 
     final ImageView img = (ImageView) view;
 
