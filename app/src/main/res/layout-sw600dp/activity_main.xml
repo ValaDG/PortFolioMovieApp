@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
-    android:layout_width="match_parent"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:divider="?android:attr/dividerHorizontal"
+              android:orientation="horizontal"
+              tools:context="com.com.degiorgi.valerio.portfoliomovieapp.UI.MainActivity">
+
+  <fragment
+    android:id="@+id/movie_fragment"
+    android:name="com.degiorgi.valerio.portfoliomovieapp.UI.MovieFragment"
+    android:layout_width="0dp"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:divider="?android:attr/dividerHorizontal"
-    tools:context="com.com.degiorgi.valerio.portfoliomovieapp.UI.MainActivity">
+    android:layout_weight="2"
+    tools:layout="@layout/movie_fragment_layout">
 
-    <fragment
-        android:id="@+id/movie_fragment"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="2"
-        android:name="com.degiorgi.valerio.portfoliomovieapp.UI.MovieFragment"
-        tools:layout="@layout/movie_fragment_layout">
+  </fragment>
 
-    </fragment>
-    
-    <FrameLayout
-        android:id="@+id/movie_detail_container"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="4">
+  <FrameLayout
+    android:id="@+id/movie_detail_container"
+    android:layout_width="0dp"
+    android:layout_height="match_parent"
+    android:layout_weight="4">
 
-    </FrameLayout>
+  </FrameLayout>
 
 </LinearLayout>
