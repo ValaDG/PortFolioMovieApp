@@ -20,7 +20,7 @@
 
     <string name="sort_by_favourite_value">favourite</string>
 
-    <string name="api_key">YOUR_API_KEY_HERE</string>
+    <string name="api_key">apikey</string>
 
     <string name="API_BASE_URL">http://api.themoviedb.org/</string>
 
