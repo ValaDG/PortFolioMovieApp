@@ -8,73 +8,73 @@ import com.google.gson.annotations.SerializedName;
  */
 public class SingleReviewResult {
 
-    @SerializedName("id")
-    @Expose
-    private String id;
-    @SerializedName("author")
-    @Expose
-    private String author;
-    @SerializedName("content")
-    @Expose
-    private String content;
-    @SerializedName("url")
-    @Expose
-    private String url;
+  @SerializedName("id")
+  @Expose
+  private String id;
+  @SerializedName("author")
+  @Expose
+  private String author;
+  @SerializedName("content")
+  @Expose
+  private String content;
+  @SerializedName("url")
+  @Expose
+  private String url;
 
-    /**
-     * @return The id
-     */
-    public String getId() {
-        return id;
-    }
+  /**
+   * @return The id
+   */
+  public String getId() {
+    return id;
+  }
 
-    /**
-     * @param id The id
-     */
-    public void setId(String id) {
-        this.id = id;
-    }
+  /**
+   * @param id The id
+   */
+  public void setId(String id) {
+    this.id = id;
+  }
 
-    /**
-     * @return The author
-     */
-    public String getAuthor() {
-        return author;
-    }
+  /**
+   * @return The author
+   */
+  public String getAuthor() {
+    return author;
+  }
 
-    /**
-     * @param author The author
-     */
-    public void setAuthor(String author) {
-        this.author = author;
-    }
+  /**
+   * @param author The author
+   */
+  public void setAuthor(String author) {
+    this.author = author;
+  }
 
-    /**
-     * @return The content
-     */
-    public String getContent() {
-        return content;
-    }
+  /**
+   * @return The content
+   */
+  public String getContent() {
+    return content;
+  }
 
-    /**
-     * @param content The content
-     */
-    public void setContent(String content) {
-        this.content = content;
-    }
+  /**
+   * @param content The content
+   */
+  public void setContent(String content) {
+    this.content = content;
+  }
 
-    /**
-     * @return The url
-     */
-    public String getUrl() {
-        return url;
-    }
+  /**
+   * @return The url
+   */
+  public String getUrl() {
+    return url;
+  }
 
-    /**
-     * @param url The url
-     */
-    public void setUrl(String url) {
-        this.url = url;
-    }
+  /**
+   * @param url The url
+   */
+  public void setUrl(String url) {
+    this.url = url;
+  }
 
 }

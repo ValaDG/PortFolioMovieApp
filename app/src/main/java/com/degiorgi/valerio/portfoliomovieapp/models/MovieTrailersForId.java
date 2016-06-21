@@ -12,39 +12,39 @@ import java.util.List;
 
 public class MovieTrailersForId {
 
-    @SerializedName("id")
-    @Expose
-    private int id;
-    @SerializedName("results")
-    @Expose
-    private List<SingleTrailerResult> results = new ArrayList<SingleTrailerResult>();
+  @SerializedName("id")
+  @Expose
+  private int id;
+  @SerializedName("results")
+  @Expose
+  private List<SingleTrailerResult> results = new ArrayList<SingleTrailerResult>();
 
-    /**
-     * @return The id
-     */
-    public int getId() {
-        return id;
-    }
+  /**
+   * @return The id
+   */
+  public int getId() {
+    return id;
+  }
 
-    /**
-     * @param id The id
-     */
-    public void setId(int id) {
-        this.id = id;
-    }
+  /**
+   * @param id The id
+   */
+  public void setId(int id) {
+    this.id = id;
+  }
 
-    /**
-     * @return The results
-     */
-    public List<SingleTrailerResult> getResults() {
-        return results;
-    }
+  /**
+   * @return The results
+   */
+  public List<SingleTrailerResult> getResults() {
+    return results;
+  }
 
-    /**
-     * @param results The results
-     */
-    public void setResults(List<SingleTrailerResult> results) {
-        this.results = results;
-    }
+  /**
+   * @param results The results
+   */
+  public void setResults(List<SingleTrailerResult> results) {
+    this.results = results;
+  }
 
 }

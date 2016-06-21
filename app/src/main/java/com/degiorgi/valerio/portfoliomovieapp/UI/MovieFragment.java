@@ -43,195 +43,198 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MovieFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
 
-    public final static int LOADER_ID = 1;
-    public CursorMovieAdapter mCursorAdapater;
-    List<Result> Movies = new ArrayList<>();
-    Call<MovieApiRequest> CallMovies;
+  public final static int LOADER_ID = 1;
+  public CursorMovieAdapter mCursorAdapater;
+  List<Result> Movies = new ArrayList<>();
+  Call<MovieApiRequest> CallMovies;
 
 
-    private void UpdateMovies() { //Executes the background Network Call
+  private void UpdateMovies() { //Executes the background Network Call
 
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(getString(R.string.API_BASE_URL)).addConverterFactory(GsonConverterFactory.create()).build();
+    Retrofit retrofit = new Retrofit.Builder().baseUrl(getString(R.string.API_BASE_URL))
+        .addConverterFactory(GsonConverterFactory.create()).build();
 
-        MovieService.FetchMovieInterface MovieInterface = retrofit.create(MovieService.FetchMovieInterface.class);
-
-
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String sortBy = preferences.getString(getString(R.string.sort_by_key), getString(R.string.sort_by_default));
+    MovieService.FetchMovieInterface MovieInterface = retrofit.create(MovieService.FetchMovieInterface.class);
 
 
-        CallMovies = MovieInterface.getMovies(sortBy, getString(R.string.api_key));
-
-        CallMovies.enqueue(new Callback<MovieApiRequest>() {
-
-            @Override
-            public void onResponse(Call<MovieApiRequest> call, Response<MovieApiRequest> response) {
-
-                if (response != null) {
-
-                    MovieApiRequest request = response.body();
-                    if (request.getResults() != null){
-                        Movies = request.getResults();
-
-                    ContentResolver resolver = getActivity().getContentResolver();
-                    String[] args = {Movies.get(0).getId().toString()};
-
-                    Cursor cur = resolver.query(MovieContentProvider.Local_Movies.CONTENT_URI, null, MovieDatabaseContract.MovieId + "=?",
-                            args, null);
-
-                    if (cur.moveToFirst()) {
-                    } else {
-                        Vector<ContentValues> cVector = new Vector<ContentValues>(Movies.size());
-
-                        for (int i = 0; i < Movies.size(); i++) {
+    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+    String sortBy = preferences.getString(getString(R.string.sort_by_key), getString(R.string.sort_by_default));
 
 
-                            ContentValues MovieValues = new ContentValues();
+    CallMovies = MovieInterface.getMovies(sortBy, getString(R.string.api_key));
 
-                            int id = Movies.get(i).getId();
-                            String posterPath = Movies.get(i).getPosterPath();
-                            String overview = Movies.get(i).getOverview();
-                            String releaseDate = Movies.get(i).getReleaseDate();
-                            String originalTitle = Movies.get(i).getOriginalTitle();
-                            double voteAverage = Movies.get(i).getVoteAverage();
-                            double popularity = Movies.get(i).getPopularity();
+    CallMovies.enqueue(new Callback<MovieApiRequest>() {
 
+      @Override
+      public void onResponse(Call<MovieApiRequest> call, Response<MovieApiRequest> response) {
 
-                            MovieValues.put(MovieDatabaseContract.MovieId, id);
-                            MovieValues.put(MovieDatabaseContract.PosterUrl, posterPath);
-                            MovieValues.put(MovieDatabaseContract.OriginalTitle, originalTitle);
-                            MovieValues.put(MovieDatabaseContract.Overview, overview);
-                            MovieValues.put(MovieDatabaseContract.ReleaseDate, releaseDate);
-                            MovieValues.put(MovieDatabaseContract.UserRating, voteAverage);
-                            MovieValues.put(MovieDatabaseContract.Popularity, popularity);
+        if (response != null) {
 
+          MovieApiRequest request = response.body();
+          if (request.getResults() != null) {
+            Movies = request.getResults();
 
-                            cVector.add(MovieValues);
-                        }
+            ContentResolver resolver = getActivity().getContentResolver();
+            String[] args = {Movies.get(0).getId().toString()};
 
-                        int inserted = 0;
-                        if (cVector.size() > 0) {
+            Cursor cur = resolver.query(MovieContentProvider.Local_Movies.CONTENT_URI, null,
+                MovieDatabaseContract.MovieId + "=?",
+                args, null);
 
-                            ContentValues[] cArray = new ContentValues[cVector.size()];
-                            cVector.toArray(cArray);
-                            inserted = getActivity().getContentResolver().bulkInsert(MovieContentProvider.Local_Movies.CONTENT_URI, cArray);
+            if (cur != null) {
+              if (!cur.moveToFirst()) {
+
+                Vector<ContentValues> cVector = new Vector<>(Movies.size());
+
+                for (int i = 0; i < Movies.size(); i++) {
 
 
-                        }
+                  ContentValues MovieValues = new ContentValues();
 
-                        Log.w("LOG TAG", "INSERTED" + inserted);
-                        ;
+                  int id = Movies.get(i).getId();
+                  String posterPath = Movies.get(i).getPosterPath();
+                  String overview = Movies.get(i).getOverview();
+                  String releaseDate = Movies.get(i).getReleaseDate();
+                  String originalTitle = Movies.get(i).getOriginalTitle();
+                  double voteAverage = Movies.get(i).getVoteAverage();
+                  double popularity = Movies.get(i).getPopularity();
 
-                    }
+
+                  MovieValues.put(MovieDatabaseContract.MovieId, id);
+                  MovieValues.put(MovieDatabaseContract.PosterUrl, posterPath);
+                  MovieValues.put(MovieDatabaseContract.OriginalTitle, originalTitle);
+                  MovieValues.put(MovieDatabaseContract.Overview, overview);
+                  MovieValues.put(MovieDatabaseContract.ReleaseDate, releaseDate);
+                  MovieValues.put(MovieDatabaseContract.UserRating, voteAverage);
+                  MovieValues.put(MovieDatabaseContract.Popularity, popularity);
+
+
+                  cVector.add(MovieValues);
+                }
+
+                int inserted = 0;
+                if (cVector.size() > 0) {
+
+                  ContentValues[] cArray = new ContentValues[cVector.size()];
+                  cVector.toArray(cArray);
+                  inserted = getActivity().getContentResolver().bulkInsert(MovieContentProvider.Local_Movies.CONTENT_URI, cArray);
+
 
                 }
-                }
+
+                Log.w("LOG TAG", "INSERTED" + inserted);
+
+
+              }
+              cur.close();
             }
 
-            @Override
-            public void onFailure(Call<MovieApiRequest> call, Throwable t) {
 
-            }
-        });
-
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        getLoaderManager().initLoader(LOADER_ID, null, this);
-    }
-
-    @Override
-
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-
-
-
-
-        mCursorAdapater = new CursorMovieAdapter(getActivity(), null, 0);
-        View rootView = inflater.inflate(R.layout.movie_fragment_layout, container, false);
-
-        GridView gridview = (GridView) rootView.findViewById(R.id.gridview_list);
-
-        gridview.setAdapter(mCursorAdapater);
-
-
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Cursor cursor = (Cursor) parent.getItemAtPosition(position);
-
-                if (cursor != null) {
-                    ((backCall) getActivity())
-                            .onGridItemSelected(MovieContentProvider.Local_Movies.withId(cursor.getInt(1)));
-                }
-            }
-        });
-
-
-
-        return rootView;
-
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        CallMovies.cancel();
-    }
-
-    @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String sortBy = preferences.getString(getString(R.string.sort_by_key), getString(R.string.sort_by_default));
-
-        String sortOrder;
-
-        if (sortBy == getString(R.string.sort_by_popularity_value) || sortBy == getString(R.string.sort_by_favourite_value)) {
-
-            sortOrder = MovieDatabaseContract.Popularity + " DESC";
-
-        } else {
-
-            sortOrder = MovieDatabaseContract.UserRating + "  DESC";
+          }
         }
+      }
 
-        if (sortBy == getString(R.string.sort_by_favourite_value)) {
+      @Override
+      public void onFailure(Call<MovieApiRequest> call, Throwable t) {
 
-            return new CursorLoader(getActivity(), MovieContentProvider.Favourite_Movies.CONTENT_URI, null, null, null,
-                    sortOrder);
-        } else {
-            return new CursorLoader(getActivity(), MovieContentProvider.Local_Movies.CONTENT_URI,
-                    null, null, null, sortOrder);
+      }
+    });
+
+  }
+
+  @Override
+  public void onActivityCreated(Bundle savedInstanceState) {
+    super.onActivityCreated(savedInstanceState);
+    getLoaderManager().initLoader(LOADER_ID, null, this);
+  }
+
+  @Override
+
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+
+    mCursorAdapater = new CursorMovieAdapter(getActivity(), null, 0);
+    View rootView = inflater.inflate(R.layout.movie_fragment_layout, container, false);
+
+    GridView gridview = (GridView) rootView.findViewById(R.id.gridview_list);
+
+    gridview.setAdapter(mCursorAdapater);
+
+
+    gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+      @Override
+      public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        Cursor cursor = (Cursor) parent.getItemAtPosition(position);
+
+        if (cursor != null) {
+          ((backCall) getActivity())
+              .onGridItemSelected(MovieContentProvider.Local_Movies.withId(cursor.getInt(1)));
         }
+      }
+    });
+
+
+    return rootView;
+
+  }
+
+  @Override
+  public void onStop() {
+    super.onStop();
+    CallMovies.cancel();
+  }
+
+  @Override
+  public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+
+    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+    String sortBy = preferences.getString(getString(R.string.sort_by_key), getString(R.string.sort_by_default));
+
+    String sortOrder;
+
+    if (sortBy.equals(getString(R.string.sort_by_popularity_value)) ||
+        sortBy.equals(getString(R.string.sort_by_favourite_value))) {
+
+      sortOrder = MovieDatabaseContract.Popularity + " DESC";
+
+    } else {
+
+      sortOrder = MovieDatabaseContract.UserRating + "  DESC";
     }
 
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        mCursorAdapater.swapCursor(data);
+    if (sortBy.equals(getString(R.string.sort_by_favourite_value))) {
+
+      return new CursorLoader(getActivity(), MovieContentProvider.Favourite_Movies.CONTENT_URI, null, null, null,
+          sortOrder);
+    } else {
+      return new CursorLoader(getActivity(), MovieContentProvider.Local_Movies.CONTENT_URI,
+          null, null, null, sortOrder);
     }
+  }
 
-    @Override
-    public void onLoaderReset(Loader loader) {
+  @Override
+  public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+    mCursorAdapater.swapCursor(data);
+  }
 
-        mCursorAdapater.swapCursor(null);
-    }
+  @Override
+  public void onLoaderReset(Loader loader) {
 
-    public void onSortChanged() {
-        UpdateMovies();
-        getLoaderManager().restartLoader(LOADER_ID, null, this);
-    }
+    mCursorAdapater.swapCursor(null);
+  }
 
-    public interface backCall {
+  public void onSortChanged() {
+    UpdateMovies();
+    getLoaderManager().restartLoader(LOADER_ID, null, this);
+  }
 
-        public void onGridItemSelected(Uri contentUri);
+  public interface backCall {
 
-    }
+    void onGridItemSelected(Uri contentUri);
+
+  }
 
 
 }

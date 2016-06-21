@@ -17,15 +17,15 @@ import retrofit2.http.Query;
 
 public class MovieService {
 
-    public interface FetchMovieInterface {
+  public interface FetchMovieInterface {
 
-        @GET("3/discover/movie")
-        Call<MovieApiRequest> getMovies(@Query("sort_by") String sort, @Query("api_key") String key);
+    @GET("3/discover/movie")
+    Call<MovieApiRequest> getMovies(@Query("sort_by") String sort, @Query("api_key") String key);
 
-        @GET("3/movie/{id}/videos")
-        Call<MovieTrailersForId> getMovieTrailers(@Path("id") int id, @Query("api_key") String key);
+    @GET("3/movie/{id}/videos")
+    Call<MovieTrailersForId> getMovieTrailers(@Path("id") int id, @Query("api_key") String key);
 
-        @GET("3/movie/{id}/reviews")
-        Call<MovieReviewsForId> getMovieReviews(@Path("id") int id, @Query("api_key") String key);
-    }
+    @GET("3/movie/{id}/reviews")
+    Call<MovieReviewsForId> getMovieReviews(@Path("id") int id, @Query("api_key") String key);
+  }
 }
