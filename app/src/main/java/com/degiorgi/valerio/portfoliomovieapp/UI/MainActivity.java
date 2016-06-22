@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements MovieFragment.bac
       Bundle args = new Bundle();
       args.putString("ReviewsMovieId", id);
 
-      ReviewsActivity fragment = new ReviewsActivity();
+      ReviewsFragment fragment = new ReviewsFragment();
       fragment.setArguments(args);
 
       getSupportFragmentManager().beginTransaction()

@@ -25,6 +25,7 @@ import com.degiorgi.valerio.portfoliomovieapp.data.MovieDatabaseContract;
 import com.degiorgi.valerio.portfoliomovieapp.models.MovieApiRequest;
 import com.degiorgi.valerio.portfoliomovieapp.models.Result;
 import com.degiorgi.valerio.portfoliomovieapp.retrofitInterface.MovieService;
+import com.degiorgi.valerio.portfoliomovieapp.retrofitInterface.RetrofitServiceFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +34,6 @@ import java.util.Vector;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 
 /**
@@ -52,10 +51,7 @@ public class MovieFragment extends Fragment implements LoaderManager.LoaderCallb
   private void UpdateMovies() { //Executes the background Network Call
 
 
-    Retrofit retrofit = new Retrofit.Builder().baseUrl(getString(R.string.API_BASE_URL))
-        .addConverterFactory(GsonConverterFactory.create()).build();
-
-    MovieService.FetchMovieInterface MovieInterface = retrofit.create(MovieService.FetchMovieInterface.class);
+    MovieService.FetchMovieInterface MovieInterface = RetrofitServiceFactory.Factory().create(MovieService.FetchMovieInterface.class);
 
 
     SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());

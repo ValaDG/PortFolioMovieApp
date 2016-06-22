@@ -31,6 +31,7 @@ import com.degiorgi.valerio.portfoliomovieapp.data.MovieDatabaseContract;
 import com.degiorgi.valerio.portfoliomovieapp.models.MovieTrailersForId;
 import com.degiorgi.valerio.portfoliomovieapp.models.SingleTrailerResult;
 import com.degiorgi.valerio.portfoliomovieapp.retrofitInterface.MovieService;
+import com.degiorgi.valerio.portfoliomovieapp.retrofitInterface.RetrofitServiceFactory;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -39,8 +40,6 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by Valerio on 28/02/2016.
@@ -179,9 +178,7 @@ public class MovieDetailFragment extends android.support.v4.app.Fragment impleme
 
     //gets our trailers by using its ID and feeds the adapter with the trailer name
 
-    Retrofit retrofit = new Retrofit.Builder().baseUrl(getString(R.string.API_BASE_URL)).addConverterFactory(GsonConverterFactory.create()).build();
-
-    MovieService.FetchMovieInterface MovieInterface = retrofit.create(MovieService.FetchMovieInterface.class);
+    MovieService.FetchMovieInterface MovieInterface = RetrofitServiceFactory.Factory().create(MovieService.FetchMovieInterface.class);
 
     callMovies = MovieInterface.getMovieTrailers(id, getString(R.string.api_key));
 

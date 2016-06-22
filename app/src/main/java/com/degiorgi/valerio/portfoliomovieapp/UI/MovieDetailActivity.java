@@ -46,7 +46,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
 
     bundle.putString("ReviewsMovieId", id);
 
-    ReviewsActivity reviewsFragment = new ReviewsActivity();
+    ReviewsFragment reviewsFragment = new ReviewsFragment();
     reviewsFragment.setArguments(bundle);
     getSupportFragmentManager().beginTransaction()
         .replace(R.id.movie_detail_container, reviewsFragment)

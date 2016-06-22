@@ -12,6 +12,7 @@ import com.degiorgi.valerio.portfoliomovieapp.R;
 import com.degiorgi.valerio.portfoliomovieapp.models.MovieReviewsForId;
 import com.degiorgi.valerio.portfoliomovieapp.models.SingleReviewResult;
 import com.degiorgi.valerio.portfoliomovieapp.retrofitInterface.MovieService;
+import com.degiorgi.valerio.portfoliomovieapp.retrofitInterface.RetrofitServiceFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,14 +20,12 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by Valerio on 01/03/2016.
- * Its named activity but its in truth a fragment
+ *
  */
-public class ReviewsActivity extends Fragment {
+public class ReviewsFragment extends Fragment {
 
   ListView reviewsListView;
   ArrayAdapter<String> mReviewsAdapter;
@@ -63,9 +62,8 @@ public class ReviewsActivity extends Fragment {
 
     //method to grab our reviews based on the movie id
 
-    Retrofit retrofit = new Retrofit.Builder().baseUrl(getString(R.string.API_BASE_URL)).addConverterFactory(GsonConverterFactory.create()).build();
 
-    MovieService.FetchMovieInterface MovieInterface = retrofit.create(MovieService.FetchMovieInterface.class);
+    MovieService.FetchMovieInterface MovieInterface = RetrofitServiceFactory.Factory().create(MovieService.FetchMovieInterface.class);
 
     callReviews = MovieInterface.getMovieReviews(id, getString(R.string.api_key));
 
