@@ -68,6 +68,7 @@ public class MovieFragment extends Fragment implements LoaderManager.LoaderCallb
         if (response != null) {
 
           MovieApiRequest request = response.body();
+          if(request!=null){
           if (request.getResults() != null) {
             Movies = request.getResults();
 
@@ -128,6 +129,8 @@ public class MovieFragment extends Fragment implements LoaderManager.LoaderCallb
 
 
           }
+          }
+
         }
       }
 
